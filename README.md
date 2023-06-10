@@ -1,0 +1,1 @@
+# The simple shopping list app for my needs
