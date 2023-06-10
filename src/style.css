@@ -1,14 +1,14 @@
 :root {
     /* --c-primary: #37B9F1; */
     --c-primary: #8739F9;
-    --c-text: #222;
+    --c-text: #3C4861;
     --c-text-disabled: #908E9B;
     --c-white-secondary: #F2F5F5;
     --c-bg: #e8e8e8;
 }
 html {
-    font-size: 18px;
-    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-family: 'Poppins', 'Roboto', Arial, Helvetica, sans-serif;
     height: 100%;
 }
 body {
@@ -29,6 +29,7 @@ body {
     background-color: var(--c-primary);
     color: var(--c-white-secondary);
     font-size: 1.25rem;
+    font-weight: 500;
     height: 70px;
 }
 .header-inner {
@@ -203,10 +204,23 @@ body {
     width: 100%;
     max-width: 450px;
 }
+.modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
 .modal-title {
     font-weight: 700;
-    margin-bottom: 1rem;
     font-size: 1.25rem;
+}
+.modal-close-btn {
+    padding: 0 0.5rem;
+    margin-right: -0.5rem;
+    font-size: 2rem;
+    color: var(--c-text-disabled);
+    line-height: 1;
+    cursor: pointer;
 }
 .modal-textarea {
     resize: none;
@@ -225,19 +239,44 @@ body {
 .modal-textarea:focus {
     border-color: var(--c-primary);
 }
-.modal-add-btn {
-    margin-top: 1rem;
-    padding: 0.75rem;
+.modal-text {
+    margin-bottom: 1rem;
+}
+.modal-add-btn,
+.modal-btn {
     text-align: center;
-    background-color: var(--c-primary);
-    color: var(--c-white-secondary);
     letter-spacing: .01rem;
     transition: .2s;
     border-radius: .5rem;
     cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
 }
-.modal-add-btn:hover {
+.modal-add-btn {
+    padding: 0.75rem;
+    margin-top: 1rem;
+    background-color: var(--c-primary);
+    color: var(--c-white-secondary);
+}
+.modal-add-btn:hover,
+.modal-btn:hover {
     opacity: .9;
+}
+.modal-buttons {
+    display: flex;
+    gap: 1rem;
+}
+.modal-btn.primary {
+    padding: 0.6rem;
+    background-color: var(--c-primary);
+    border: 2px solid var(--c-primary);
+    color: var(--c-white-secondary);
+}
+.modal-btn.secondary {
+    padding: 0.6rem;
+    background-color: transparent;
+    border: 2px solid var(--c-primary);
+    color: var(--c-text);
 }
 
 .modal.visible {

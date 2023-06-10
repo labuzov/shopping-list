@@ -30,9 +30,18 @@ function hideModal() {
     modal.classList.remove('visible');
 }
 
-function showModal() {
+function showModal(title, contentTemplate) {
     if (!modal) return;
 
+    modal.innerHTML = `
+        <div class="modal-inner">
+            <div class="modal-header">
+                <div class="modal-title">${title}</div> 
+                <div class="modal-close-btn" onclick="handleCloseModalClick()">&#215;</div>
+            </div>
+            ${contentTemplate}
+        </div>
+    `;
     modal.classList.add('visible');
 }
 
@@ -51,12 +60,33 @@ function initModal() {
     modal.addEventListener('click', handleModalClick);
 }
 
+function handleClearAllClick() {
+    const modalTitle = 'Подтверждение'
+    const template = `
+        <div class="modal-text">Очистить все?</div>
+        <div class="modal-buttons">
+            <div class="modal-btn secondary" onclick="hideModal()">Отмена</div>
+            <div class="modal-btn primary" onclick="acceptClearAllClick()">Ок</div>
+        </div>
+    `;
+    
+    showModal(modalTitle, template);
+}
 
-function handleClearClick() {
+function acceptClearAllClick() {
+    clearAll();
+    hideModal();
+}
+
+function clearAll() {
     itemList = [];
 
     renderItemList();
     saveItemList();
+}
+
+function handleCloseModalClick() {
+    hideModal();
 }
 
 const handleItemClick = (id) => {
@@ -79,7 +109,13 @@ const handleItemClick = (id) => {
 }
 
 function handleAddItemClick() {
-    showModal();
+    const modalTitle = 'Добавить в список';
+    const modalContent = `
+        <textarea id="modal-textarea" class="modal-textarea" rows="10"></textarea>
+        <div class="modal-add-btn" onclick="handleCreateClick()">Добавить</div>
+    `;
+
+    showModal(modalTitle, modalContent);
 }
 
 function generateItemId() {
