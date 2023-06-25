@@ -41,7 +41,13 @@ body {
     align-items: center;
     height: 100%;
 }
-.clear {
+
+.header-buttons {
+    display: flex;
+}
+
+.clear, .editSwitch {
+    margin-left: 1rem;
     width: 2rem;
     height: 2rem;
     display: flex;
@@ -49,13 +55,16 @@ body {
     justify-content: center;
     cursor: pointer;
 }
-.clear svg {
+.clear svg,
+.editSwitch svg {
     width: 1.5rem;
     height: 1.5rem;
 }
-.clear path {
+.clear path,
+.editSwitch path {
     fill: var(--c-white-secondary);
 }
+
 .container {
     position: relative;
     max-width: 1024px;
@@ -80,10 +89,15 @@ body {
 .item {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 1rem;
     background-color: white;
     transition: .2s;
     cursor: pointer;
+}
+.item-info {
+    display: flex;
+    align-items: center;
 }
 .item.selected {
     background-color: var(--c-bg);
@@ -101,7 +115,38 @@ body {
     padding: 0 1rem;
     color: var(--c-text);
     line-height: 1.4;
+    word-break: break-all;
+    word-break: break-word;
     transition: .2s;
+}
+.item .item-buttons {
+    visibility: hidden;
+    opacity: 0;
+    transition: .2s;
+}
+.item.edit-mode .item-buttons {
+    visibility: visible;
+    opacity: 1;
+}
+.item-btn {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 10;
+}
+.item-btn svg {
+    width: 1rem;
+    height: 1rem;
+}
+.item-btn path {
+    fill: var(--c-text-disabled);
+    stroke: var(--c-text-disabled);
+}
+.item-btn:not(:last-child) {
+    margin-right: 1rem;
 }
 .ui-checkbox, 
 .ui-checkbox *, 

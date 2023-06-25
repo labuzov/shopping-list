@@ -1,9 +1,13 @@
 const MODAL_ID = 'modal';
 const MODAL_TEXTAREA_ID = 'modal-textarea';
 const ITEM_LIST_ID = 'list';
+const EDIT_MODE_SWITCH_BUTTON_ID = 'editModeSwitchBtn';
 
 const modal = document.getElementById(MODAL_ID);
+const editModeSwitchBtn = document.getElementById(EDIT_MODE_SWITCH_BUTTON_ID);
 let itemList = [];
+
+let isEditModeEnabled = false;
 
 initApp();
 
@@ -73,6 +77,23 @@ function handleClearAllClick() {
     showModal(modalTitle, template);
 }
 
+function handleEditModeSwitchClick() {
+    if (!editModeSwitchBtn) return;
+
+    const isEnabled = !isEditModeEnabled;
+
+    isEditModeEnabled = isEnabled;
+
+    const items = document.getElementsByClassName('item');
+    for (const item of items) {
+        if (isEnabled) {
+            item.classList.add('edit-mode');
+        } else {
+            item.classList.remove('edit-mode');
+        }
+    }
+}
+
 function acceptClearAllClick() {
     clearAll();
     hideModal();
@@ -105,6 +126,16 @@ const handleItemClick = (id) => {
         }
         return item;
     });
+    saveItemList();
+}
+
+const handleDeleteItemClick = (id) => {
+    const elem = document.getElementById(`item_${id}`);
+    if (!elem) return;
+
+    itemList = itemList.filter(item => item.id !== id);
+
+    renderItemList();
     saveItemList();
 }
 
@@ -196,9 +227,18 @@ function renderItem(id, text, checked) {
     if (!listElem) return;
 
     const itemTemplate = `
-        <div id="item_${id}" class="item${checked ? ' selected' : ''}" onclick="handleItemClick(${id})">
-            <input type="checkbox" class="ui-checkbox">
-            <div class="item-text">${text || ''}</div>
+        <div id="item_${id}" class="item${checked ? ' selected' : ''}${isEditModeEnabled ? ' edit-mode' : ''}" onclick="handleItemClick(${id})">
+            <div class="item-info">
+                <input type="checkbox" class="ui-checkbox">
+                <div class="item-text">${text || ''}</div>
+            </div>
+            <div class="item-buttons">
+                <div class="item-btn" onclick="handleDeleteItemClick(${id})">
+                    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 14.545L1.455 16 8 9.455 14.545 16 16 14.545 9.455 8 16 1.455 14.545 0 8 6.545 1.455 0 0 1.455 6.545 8z" fill-rule="evenodd"/>
+                    </svg>
+                </div>
+            </div>
         </div>
     `;
 
