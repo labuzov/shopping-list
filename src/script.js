@@ -15,6 +15,20 @@ function initApp() {
     loadItemList();
     renderItemList();
     initModal();
+    getItemListFromParams();
+}
+
+function getItemListFromParams() {
+    const list = getParams().list;
+    if (!list) return;
+
+    const modalTitle = 'Подтверждение'
+    const template = `
+        <div class="modal-text">Использовать скопированный список?</div>
+        <div class="modal-add-btn" onclick="handlePasteClick()">Ок</div>
+    `;
+    
+    showModal(modalTitle, template);
 }
 
 function loadItemList() {
@@ -137,6 +151,53 @@ const handleDeleteItemClick = (id) => {
 
     renderItemList();
     saveItemList();
+}
+
+function handleCopyButtonClick() {
+    const modalTitle = 'Поделиться';
+    const modalContent = `
+        <div class="modal-text">Скопировать ссылку на список?</div>
+        <div class="modal-add-btn" onclick="handleCopyClick()">Скопировать</div>
+    `;
+
+    showModal(modalTitle, modalContent);
+}
+
+function handlePasteClick() {
+    const list = getParams().list;
+
+    if (!list) return;
+    itemList = JSON.parse(list);
+    saveItemList();
+    renderItemList();
+
+    hideModal();
+    clearParams();
+}
+
+function clearParams() {
+    if (location.href.includes('?')) { 
+        history.pushState({}, null, location.href.split('?')[0]); 
+    }
+}
+
+function getParams() {
+    return new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    });
+}
+
+function handleCopyClick() {
+    const list = localStorage.getItem(ITEM_LIST_ID);
+    if (!list) return;
+
+    const params = new URLSearchParams(list).toString();
+    const validatedParams = params.substring(0, params.length - 1)
+    const link = location.href + `?list=${validatedParams}`;
+
+    navigator.clipboard.writeText(link);
+
+    hideModal();
 }
 
 function handleAddItemClick() {
