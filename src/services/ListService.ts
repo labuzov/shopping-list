@@ -1,0 +1,57 @@
+import { collection, deleteDoc, doc, getDocs, updateDoc, writeBatch } from 'firebase/firestore';
+
+import { firebaseFirestore } from '@/firebaseConfig';
+import { ShoppingItem } from '@/models/shoppingListModels';
+import { generateId } from '@/helpers/numberHelpers';
+
+
+class ListService {
+    private _listPath = 'lists';
+
+    public async addItems(listId: string, items: ShoppingItem[]) {
+        const batch = writeBatch(firebaseFirestore);
+        const startTs = new Date().getTime();
+
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            const itemId = generateId();
+            item.createdAt = startTs + i;
+
+            batch.set(this._getListItemRef(listId, itemId), item);
+        }
+
+        await batch.commit();
+    }
+
+    public async updateItem(listId: string, itemId: string, item: ShoppingItem) {
+        item.updatedAt = new Date().getTime();
+        await updateDoc(this._getListItemRef(listId, itemId), item);
+    }
+
+    public async deleteItem(listId: string, itemId: string) {
+        await deleteDoc(this._getListItemRef(listId, itemId));
+    }
+
+    public async clearList(listId: string) {
+        const query = this._getListItemCollectionRef(listId);
+        const { docs } = await getDocs(query);
+
+        const batch = writeBatch(firebaseFirestore);
+
+        for (const doc of docs) {
+            batch.delete(doc.ref);
+        }
+        
+        await batch.commit();
+    }
+
+    private _getListItemCollectionRef(listId: string) {
+        return collection(firebaseFirestore, `${this._listPath}/${listId}/items`);
+    }
+
+    private _getListItemRef(listId: string, itemId: string) {
+        return doc(firebaseFirestore, `${this._listPath}/${listId}/items/${itemId}`);
+    }
+}
+
+export default new ListService();

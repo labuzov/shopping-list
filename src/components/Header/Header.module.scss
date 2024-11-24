@@ -1,0 +1,25 @@
+.header {
+    height: 65px;
+    position: relative;
+    z-index: 1;
+    background-color: var(--color-header-bg);
+    box-shadow: var(--shadow-header);
+}
+
+.container {
+    padding: 0 0.5rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    margin-left: 1rem;
+    font-weight: 500;
+    font-size: 1.1rem;
+}

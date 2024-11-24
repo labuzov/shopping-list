@@ -1,0 +1,114 @@
+.list {
+    margin: 0 -1rem;
+    transition: .3s;
+    user-select: none;
+}
+
+.itemWrapper {
+    &:not(:last-child) {
+        border-bottom: 1px solid var(--color-shop-item-border);
+    }
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    min-height: 70px;
+    background-color: var(--color-shop-item-bg);
+    transition: .2s;
+    cursor: pointer;
+
+    .left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding-right: 0.5rem;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .right {
+        position: relative;
+
+        .price {
+            position: absolute;
+            top: -12px;
+            right: 0;
+            color: var(--color-text-secondary);
+            font-size: 14px;
+            text-wrap: nowrap;
+        }
+    }
+
+    .amount {
+        color: var(--color-text-secondary);
+    }
+
+    &.done {
+        background-color: var(--color-bg);
+
+        .left {
+            transition: .2s;
+            color: var(--color-text-disabled);
+        }
+    }
+
+    &.editMode {
+        .actions {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
+    .actions {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        color: var(--color-text-disabled);
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1;
+        transition: .1s;
+        transition-timing-function: ease-in-out;
+    }
+
+    &Enter {
+        opacity: 0;
+    }
+    &EnterActive {
+        opacity: 1;
+        transition: 300ms;
+    }
+    &Exit {
+        animation: exit 0.7s;
+    }
+    &ExitActive {
+        opacity: 0;
+    }
+
+    @keyframes exit {
+        0% {
+            opacity: 1;
+            max-height: 80px;
+        }
+    
+        50% {
+            opacity: 0;
+            transform: translateX(-100%);
+            max-height: 80px;
+        }
+    
+        100% {
+            opacity: 0;
+            transform: translateX(-100%);
+            max-height: 0;
+        }
+    }
+}
+
+.loading {
+    height: 100%;
+}

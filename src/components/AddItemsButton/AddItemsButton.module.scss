@@ -1,0 +1,20 @@
+.button {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary);
+    color: #f2f5f5;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: .1s;
+
+    &:active {
+        transform: scale(0.95);
+    }
+}

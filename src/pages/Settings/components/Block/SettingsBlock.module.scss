@@ -1,0 +1,15 @@
+.wrapper {
+    padding: 1.5rem;
+    background-color: var(--color-content-block-bg);
+
+    &:not(:first-child) {
+        margin-top: 0.5rem;
+    }
+}
+
+.title {
+    margin-bottom: 1.5rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-primary);
+}

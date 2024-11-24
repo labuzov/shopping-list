@@ -1,0 +1,21 @@
+.paper {
+    background-color: var(--color-menu-panel-bg);
+    color: var(--color-text);
+    width: 85%;
+    max-width: 300px;
+}
+
+.logo {
+    padding: 1.5rem 2rem 1.5rem 0.75rem;
+    font-weight: 500;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-menu-panel-logo);
+    background-color: var(--color-primary);
+}
+
+.divider {
+    height: 1px;
+    margin: 0.5rem 0;
+    background-color: var(--color-divider);
+}

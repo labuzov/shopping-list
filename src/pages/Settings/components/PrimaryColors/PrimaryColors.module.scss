@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    align-items: center;
+}
+
+.item {
+    margin-right: 8px;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.25rem;
+    position: relative;
+    cursor: pointer;
+
+    &:last-child {
+        margin-right: 0;
+    }
+
+    &.selected {
+        opacity: 0.3;
+    }
+}
+
+.icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        color: #fff;
+    }
+}
