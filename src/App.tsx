@@ -27,6 +27,7 @@ const App = () => {
                 <Suspense fallback={<Loading fillContainer />}>
                     <Routes>
                         <Route path="" element={<ShoppingListPage />} />
+                        <Route path="list/:id" element={<ShoppingListPage />} />
 
                         <Route path="settings" element={<SettingsPage />} />
                     </Routes>

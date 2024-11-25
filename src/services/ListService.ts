@@ -1,12 +1,26 @@
-import { collection, deleteDoc, doc, getDocs, updateDoc, writeBatch } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc, writeBatch } from 'firebase/firestore';
 
 import { firebaseFirestore } from '@/firebaseConfig';
-import { ShoppingItem } from '@/models/shoppingListModels';
+import { ShoppingItem, ShoppingList } from '@/models/shoppingListModels';
 import { generateId } from '@/helpers/numberHelpers';
 
 
 class ListService {
     private _listPath = 'lists';
+
+    public async createList(list: ShoppingList) {
+        list.createdAt = new Date().getTime();
+        await addDoc(this._getListCollectionRef(), list);
+    }
+
+    public async updateList(listId: string, list: ShoppingList) {
+        list.updatedAt = new Date().getTime();
+        await updateDoc(this._getListRef(listId), list);
+    }
+
+    public async deleteList(listId: string) {
+        await deleteDoc(this._getListRef(listId));
+    }
 
     public async addItems(listId: string, items: ShoppingItem[]) {
         const batch = writeBatch(firebaseFirestore);
@@ -43,6 +57,14 @@ class ListService {
         }
         
         await batch.commit();
+    }
+
+    private _getListCollectionRef() {
+        return collection(firebaseFirestore, `${this._listPath}`);
+    }
+
+    private _getListRef(listId: string) {
+        return doc(firebaseFirestore, `${this._listPath}/${listId}`);
     }
 
     private _getListItemCollectionRef(listId: string) {

@@ -1,5 +1,15 @@
+export enum ShoppingListIcon {
+    Default = 'default',
+    WB = 'wb',
+    Fix = 'fix',
+    Korona = 'korona',
+}
+
 export type ShoppingList = {
-    items?: { [id: string]: ShoppingItem };
+    title?: string;
+    icon?: ShoppingListIcon;
+    createdAt?: number;
+    updatedAt?: number;
 }
 
 export type ShoppingItem = {

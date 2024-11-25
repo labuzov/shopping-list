@@ -25,7 +25,7 @@ export const Header: React.FC<HeaderProps> = ({ children }) => {
                     <div className={styles.left}>
                         <IconButton Icon={MdMenu} onClick={handleMenuButtonClick} />
 
-                        <div className={styles.logo}>
+                        <div className={styles.title}>
                             Покупки
                         </div>
                     </div>

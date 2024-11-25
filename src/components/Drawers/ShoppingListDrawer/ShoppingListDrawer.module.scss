@@ -1,0 +1,33 @@
+.paper {
+    width: calc(100% - 3rem);
+    max-width: 450px;
+    padding: 1.5rem;
+    padding-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin: 0 -0.75rem;
+
+    .title {
+        margin-left: 0.5rem;
+        font-weight: 500;
+        font-size: 1.2rem;
+    }
+}
+
+.content {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.btn {
+    margin-top: 1.5rem;
+    width: 100%;
+}

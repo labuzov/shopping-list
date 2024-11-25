@@ -1,5 +1,6 @@
 import { createRef, useMemo } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { MdOutlineMoodBad } from 'react-icons/md';
 
 import { ShoppingItem } from '@/models/shoppingListModels';
 import { useOverlayComponent } from '@/hooks/overlayComponentsHooks';
@@ -66,7 +67,6 @@ export const ItemList: React.FC<ItemListProps> = ({ listId, shoppingItems, dataS
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [shoppingItems, editMode]);
 
-
     if (dataStatus === FirestoreDataStatus.None) return (
         <div className={styles.loading}>
             <Loading fillContainer />
@@ -75,9 +75,16 @@ export const ItemList: React.FC<ItemListProps> = ({ listId, shoppingItems, dataS
 
     return (
         <div className={styles.list}>
-            <TransitionGroup>
-                {items}
-            </TransitionGroup>
+            {!items.length ? (
+                <div className={styles.noItems}>
+                    <MdOutlineMoodBad className={styles.noItemsIcon} />
+                    <div className={styles.noItemsText}>Список пуст</div>
+                </div>
+            ) : (
+                <TransitionGroup>
+                    {items}
+                </TransitionGroup>
+            )}
         </div>
     );
 }

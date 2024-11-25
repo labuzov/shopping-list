@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { MdDeleteOutline, MdOutlineEditOff, MdOutlineModeEditOutline } from 'react-icons/md';
 
-import { ShoppingList } from '@/models/shoppingListModels';
+import { ShoppingItem } from '@/models/shoppingListModels';
 import { useOverlayComponent } from '@/hooks/overlayComponentsHooks';
 import ListService from '@/services/ListService';
 
@@ -18,9 +19,12 @@ import styles from './ShoppingListPage.module.scss';
 const ordering: FirestoreDataOrdering = { field: 'createdAt', directionStr: 'asc' };
 
 const ShoppingListPage = () => {
-    const listId = 'default'
-    const { data, dataStatus } = useFirestoreData<ShoppingList>(`lists/${listId}/items`, { ordering });
     const [editMode, setEditMode] = useState(false);
+
+    const { id } = useParams<{ id: string }>();
+    const listId = id ?? 'default';
+
+    const { data, dataStatus } = useFirestoreData<ShoppingItem>(`lists/${listId}/items`, { ordering });
 
     const { showConfirmationModal } = useOverlayComponent();
 
