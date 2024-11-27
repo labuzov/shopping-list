@@ -1,7 +1,8 @@
-import { PropsWithChildren } from 'react';
+import { FC, useContext } from 'react';
 import { MdMenu } from 'react-icons/md';
 
 import { useOverlayComponent } from '@/hooks/overlayComponentsHooks';
+import { HeaderContext } from '@/providers/HeaderProvider';
 
 import { IconButton } from '../IconButton/IconButton';
 import { MenuPanelDrawer } from './MenuPanelDrawer/MenuPanelDrawer';
@@ -9,9 +10,8 @@ import { Container } from '../Container/Container';
 import styles from './Header.module.scss';
 
 
-type HeaderProps = PropsWithChildren;
-
-export const Header: React.FC<HeaderProps> = ({ children }) => {
+export const Header: FC = () => {
+    const { title, content } = useContext(HeaderContext);
     const { showOverlayComponent, closeOverlayComponent } = useOverlayComponent();
 
     const handleMenuButtonClick = () => {
@@ -26,11 +26,11 @@ export const Header: React.FC<HeaderProps> = ({ children }) => {
                         <IconButton Icon={MdMenu} onClick={handleMenuButtonClick} />
 
                         <div className={styles.title}>
-                            Покупки
+                            {title || 'Покупки'}
                         </div>
                     </div>
                     <div className={styles.right}>
-                        {children}
+                        {content}
                     </div>
                 </Container>
             </div>

@@ -10,10 +10,10 @@ import { ItemList } from '@/pages/List/components/ItemList/ItemList';
 import { Container } from '@/components/Container/Container';
 import { AddItemsButton } from '@/components/AddItemsButton/AddItemsButton';
 import { FirestoreDataOrdering, useFirestoreData } from '@/hooks/firestoreHooks';
-import { Header } from '@/components/Header/Header';
 import { IconButton } from '@/components/IconButton/IconButton';
 
 import styles from './ShoppingListPage.module.scss';
+import { useHeaderOptions } from '@/hooks/headerHooks';
 
 
 const ordering: FirestoreDataOrdering = { field: 'createdAt', directionStr: 'asc' };
@@ -38,15 +38,16 @@ const ShoppingListPage = () => {
         setEditMode(mode => !mode);
     }
 
+    useHeaderOptions({ content: (
+        <div className={styles.actions}>
+            <IconButton Icon={editMode ? MdOutlineEditOff : MdOutlineModeEditOutline} onClick={handleEditModeClick} />
+            <IconButton Icon={MdDeleteOutline} onClick={handleDelete} />
+        </div>
+    )});
+
     return (
         <>
-            <Header>
-                <div className={styles.actions}>
-                    <IconButton Icon={editMode ? MdOutlineEditOff : MdOutlineModeEditOutline} onClick={handleEditModeClick} />
-                    <IconButton Icon={MdDeleteOutline} onClick={handleDelete} />
-                </div>
-            </Header>
-            <Container headerOffset maxWidth={768}>
+            <Container maxWidth={768}>
                 <ItemList
                     listId={listId}
                     shoppingItems={data}
