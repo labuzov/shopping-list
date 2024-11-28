@@ -53,7 +53,11 @@ export const CreateShoppingListDrawer: React.FC<CreateShoppingListDrawerProps> =
                 <div className={styles.form}>
                     <Row>
                         <Label text="Название" />
-                        <Input value={title} onChange={e => setTitle(e.currentTarget.value)} />
+                        <Input
+                            name="title"
+                            value={title}
+                            onChange={e => setTitle(e.currentTarget.value)}
+                        />
                     </Row>
 
                     <Row>

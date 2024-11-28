@@ -1,6 +1,8 @@
 export enum ShoppingListIcon {
     Default = 'default',
+    Cart = 'cart',
     WB = 'wb',
+    Ozon = 'ozon',
     Fix = 'fix',
     Korona = 'korona',
 }

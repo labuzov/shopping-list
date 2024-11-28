@@ -1,3 +1,4 @@
+import { MdShoppingCart } from 'react-icons/md';
 import { IoMdListBox } from 'react-icons/io';
 
 import { ShoppingListIcon } from '@/models/shoppingListModels';
@@ -5,13 +6,16 @@ import { ShoppingListIcon } from '@/models/shoppingListModels';
 import { FixIcon } from '@/components/Icons/FixIcon';
 import { KoronaIcon } from '@/components/Icons/KoronaIcon';
 import { WBIcon } from '@/components/Icons/WBIcon';
+import { OzonIcon } from '@/components/Icons/OzonIcon';
 
 
-export const getShoppingListIcon = (icon: ShoppingListIcon) => {
+export const getShoppingListIcon = (icon?: ShoppingListIcon) => {
     switch (icon) {
-        case ShoppingListIcon.Korona: return KoronaIcon;
-        case ShoppingListIcon.Fix: return FixIcon;
+        case ShoppingListIcon.Cart: return MdShoppingCart;
         case ShoppingListIcon.WB: return WBIcon;
+        case ShoppingListIcon.Ozon: return OzonIcon;
+        case ShoppingListIcon.Fix: return FixIcon;
+        case ShoppingListIcon.Korona: return KoronaIcon;
         default: return IoMdListBox;
     }
 }

@@ -14,7 +14,7 @@ export const HeaderContext = createContext<ContextValue>(null!);
 
 const HeaderProvider = ({ children }: PropsWithChildren) => {
     const [content, setHeaderContent] = useState<JSX.Element | null>(null);
-    const [title, setHeaderTitle] = useState('Покупки');
+    const [title, setHeaderTitle] = useState('');
 
     const setContent = (content: JSX.Element | null) => {
         setHeaderContent(content);

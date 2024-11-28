@@ -1,15 +1,17 @@
+import { MdDelete, MdEdit } from 'react-icons/md';
 import classNames from 'classnames';
 
+import { FirestoreData } from '@/hooks/firestoreHooks';
 import { ShoppingItem } from '@/models/shoppingListModels';
 
 import { Checkbox } from '@/components/FormControls/Checkbox/Checkbox';
-import styles from './ItemList.module.scss';
 import { IconButton } from '@/components/IconButton/IconButton';
-import { MdDelete, MdEdit } from 'react-icons/md';
+
+import styles from './ItemList.module.scss';
 
 
 type ItemProps = {
-    item: ShoppingItem;
+    item: FirestoreData<ShoppingItem>;
     editMode?: boolean;
     onClick?: () => void;
     onEditClick?: () => void;
@@ -21,7 +23,7 @@ export const Item: React.FC<ItemProps> = ({ item, editMode, onClick, onDeleteCli
     return (
         <div className={classNames(styles.item, item.isDone && styles.done, editMode && styles.editMode)} onClick={onClick}>
             <div className={styles.left}>
-                <Checkbox value={!!item.isDone} />
+                <Checkbox value={!!item.isDone} name={item.id} />
                 {item.title}
                 {item.amount && item.amount >= 2 && (
                     <span className={styles.amount}>{item.amount} шт.</span>

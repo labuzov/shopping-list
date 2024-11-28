@@ -10,13 +10,20 @@
     }
 }
 
+.text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+}
+
 .icon {
     margin-right: 1rem;
     display: flex;
-    color: var(--color-menu-panel-icon);;
+    color: var(--color-menu-panel-icon);
 
     svg {
         width: 1.5rem;
         height: 1.5rem;
+        fill: var(--color-menu-panel-icon);
     }
 }

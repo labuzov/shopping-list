@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { ElementType, memo } from 'react';
 import { IconType } from 'react-icons/lib';
 import classNames from 'classnames';
 
@@ -8,7 +8,7 @@ import styles from './MenuPanelButton.module.scss';
 type MenuPanelButtonProps = {
     text: string;
     className?: string;
-    Icon?: IconType | null;
+    Icon?: IconType | ElementType | null;
     onClick?: () => void;
 }
 

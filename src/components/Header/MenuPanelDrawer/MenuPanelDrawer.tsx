@@ -1,15 +1,25 @@
 import { AiOutlineHome, AiOutlineSetting } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 
-import { MenuPanelButton } from './MenuPanelButton/MenuPanelButton';
+import { ShoppingList } from '@/models/shoppingListModels';
+
 import { OverlayComponentBase } from '@/components/OverlayComponentsContainer';
 import { Drawer } from '@/components/Drawers/Drawer';
+
+import { MenuPanelButton } from './MenuPanelButton/MenuPanelButton';
 import styles from './MenuPanelDrawer.module.scss';
+import { useMemo } from 'react';
+import { FirestoreData } from '@/hooks/firestoreHooks';
+import { getShoppingListIcon } from '@/helpers/shoppingListIconHelpers';
 
 
-type MenuPanelDrawerProps = OverlayComponentBase;
+type MenuPanelDrawerProps = OverlayComponentBase & {
+    lists: FirestoreData<ShoppingList>[];
+};
 
-export const MenuPanelDrawer: React.FC<MenuPanelDrawerProps> = ({ onClose, ...props }) => {
+export const MenuPanelDrawer: React.FC<MenuPanelDrawerProps> = ({
+    lists, onClose, ...props 
+}) => {
     const navigate = useNavigate();
 
     const handleHomeButtonClick = () => {
@@ -21,6 +31,28 @@ export const MenuPanelDrawer: React.FC<MenuPanelDrawerProps> = ({ onClose, ...pr
         navigate('/settings');
         onClose();
     }
+
+    const listButtons = useMemo(() => {
+        if (!lists.length) return null;
+
+        return (
+            <>
+                <div className={styles.divider} />
+                {lists.map(list => (
+                    <MenuPanelButton
+                        key={list.id}
+                        text={list.title || 'Без названия'}
+                        Icon={getShoppingListIcon(list.icon)}
+                        onClick={() => {
+                            navigate(`/list/${list.id}`);
+                            onClose();
+                        }}
+                    />
+                ))}
+            </>
+        );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [lists]);
 
     return ( 
         <Drawer
@@ -40,6 +72,9 @@ export const MenuPanelDrawer: React.FC<MenuPanelDrawerProps> = ({ onClose, ...pr
                             Icon={AiOutlineHome}
                             onClick={handleHomeButtonClick}
                         />
+
+                        {listButtons}
+
                         <div className={styles.divider} />
                         <MenuPanelButton
                             text="Настройки"

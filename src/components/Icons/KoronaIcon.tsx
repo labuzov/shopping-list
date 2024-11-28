@@ -1,6 +1,3 @@
-
-
-
 import { FC } from 'react';
 
 

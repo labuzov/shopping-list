@@ -9,7 +9,7 @@ export type FirestoreData<T> = T & {
 }
 
 export enum FirestoreDataStatus {
-    None,
+    Loading,
     Loaded,
     Error
 }
@@ -35,10 +35,12 @@ export const useFirestoreData = <T>(path: string, options?: FirestoreDataOptions
     const { filters, disableFetching, ordering } = options ?? {};
 
     const [data, setData] = useState<FirestoreData<T>[]>([]);
-    const [status, setStatus] = useState(FirestoreDataStatus.None);
+    const [status, setStatus] = useState(FirestoreDataStatus.Loading);
 
     useEffect(() => {
         if (!path || disableFetching) return;
+
+        setStatus(FirestoreDataStatus.Loading);
 
         let q: CollectionReference | Query = collection(firebaseFirestore, path);
         if (filters?.length) {

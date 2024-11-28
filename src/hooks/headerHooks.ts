@@ -19,5 +19,5 @@ export const useHeaderOptions = ({ content, title }: HeaderOptions) => {
             reset();
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [content, title]);
 }

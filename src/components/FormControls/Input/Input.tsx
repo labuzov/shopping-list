@@ -25,7 +25,7 @@ export const Input: FC<InputProps> = (props) => {
 		return (
 			<div className={classNames(styles.icon, iconClassName)} onClick={onIconClick}>
                 {<Icon />}
-            </div>
+			</div>
 		)
 	}
 

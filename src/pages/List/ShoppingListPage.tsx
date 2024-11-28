@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { MdDeleteOutline, MdOutlineEditOff, MdOutlineModeEditOutline } from 'react-icons/md';
 
@@ -38,12 +38,19 @@ const ShoppingListPage = () => {
         setEditMode(mode => !mode);
     }
 
-    useHeaderOptions({ content: (
-        <div className={styles.actions}>
-            <IconButton Icon={editMode ? MdOutlineEditOff : MdOutlineModeEditOutline} onClick={handleEditModeClick} />
-            <IconButton Icon={MdDeleteOutline} onClick={handleDelete} />
-        </div>
-    )});
+    const headerOptions = useMemo(() => {
+        return {
+            content: (
+                <div className={styles.actions}>
+                    <IconButton Icon={editMode ? MdOutlineEditOff : MdOutlineModeEditOutline} onClick={handleEditModeClick} />
+                    <IconButton Icon={MdDeleteOutline} onClick={handleDelete} />
+                </div>
+            )
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [editMode, listId]);
+
+    useHeaderOptions(headerOptions);
 
     return (
         <>

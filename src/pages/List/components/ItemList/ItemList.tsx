@@ -67,7 +67,7 @@ export const ItemList: React.FC<ItemListProps> = ({ listId, shoppingItems, dataS
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [shoppingItems, editMode]);
 
-    if (dataStatus === FirestoreDataStatus.None) return (
+    if (dataStatus === FirestoreDataStatus.Loading) return (
         <div className={styles.loading}>
             <Loading fillContainer />
         </div>

@@ -7,6 +7,8 @@ import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { Loading } from '@/components/Loading/Loading';
 import { OverlayComponentsContainer } from '@/components/OverlayComponentsContainer';
 import Layout from '@/components/Layout/Layout';
+
+import Page404 from './pages/Errors/Page404';
 import './styles/App.scss';
 
 const ShoppingListPage = React.lazy(() => import('@/pages/List/ShoppingListPage'));
@@ -30,6 +32,8 @@ const App = () => {
                         <Route path="list/:id" element={<ShoppingListPage />} />
 
                         <Route path="settings" element={<SettingsPage />} />
+
+                        <Route path="*" element={<Page404 />} />
                     </Routes>
                 </Suspense>
             </Layout>

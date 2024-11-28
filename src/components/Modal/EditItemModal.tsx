@@ -57,11 +57,19 @@ export const EditItemModal: React.FC<EditItemModalProps> = ({
             onClose={onClose}
             {...props}
         >
-            <Label text='Название' />
-            <Input value={title} onChange={e => setTitle(e.currentTarget.value)} style={{ marginBottom: '1rem' }} />
+            <Label text="Название" />
+            <Input
+                name="title"
+                value={title}
+                onChange={e => setTitle(e.currentTarget.value)} style={{ marginBottom: '1rem' }}
+            />
 
-            <Label text='Цена' />
-            <Input value={price} onChange={e => setPrice(e.currentTarget.value)} />
+            <Label text="Цена" />
+            <Input
+                name="price"
+                value={price}
+                onChange={e => setPrice(e.currentTarget.value)}
+            />
         </Modal>
     );
 }

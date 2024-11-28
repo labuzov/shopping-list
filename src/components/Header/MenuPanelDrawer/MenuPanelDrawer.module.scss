@@ -1,3 +1,13 @@
+.container,
+.panelWrapper {
+    height: 100%;
+}
+
+.panelWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
 .paper {
     background-color: var(--color-menu-panel-bg);
     color: var(--color-text);
@@ -9,9 +19,13 @@
     padding: 1.5rem 2rem 1.5rem 0.75rem;
     font-weight: 500;
     font-size: 1.2rem;
-    margin-bottom: 0.5rem;
     color: var(--color-menu-panel-logo);
     background-color: var(--color-primary);
+}
+
+.list {
+    margin: 0.5rem 0;
+    overflow: auto;
 }
 
 .divider {

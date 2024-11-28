@@ -55,7 +55,11 @@ export const AddItemsModal: React.FC<AddItemsModalProps> = ({
             onClose={onClose}
             {...props}
         >
-            <Textarea value={value} onChange={e => setValue(e.currentTarget.value)} />
+            <Textarea
+                name="items"
+                value={value}
+                onChange={e => setValue(e.currentTarget.value)}
+            />
         </Modal>
     );
 }

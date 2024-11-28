@@ -1,4 +1,6 @@
 .loading {
+    animation: delay 0.4s;
+
     svg {
         width: 48px;
         transform-origin: center;
@@ -13,6 +15,15 @@
         stroke-dashoffset: 0;
         stroke-linecap: round;
         animation: dash4 1.5s ease-in-out infinite;
+    }
+
+    @keyframes delay {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
     }
     
     @keyframes rotate4 {
