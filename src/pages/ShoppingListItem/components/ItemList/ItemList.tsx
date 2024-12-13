@@ -9,9 +9,11 @@ import ListService from '@/services/ListService';
 
 import { EditItemModal } from '@/components/Modal/EditItemModal';
 import { Loading } from '@/components/Loading/Loading';
+import { Summary } from '../Summary/Summary';
 import { Item } from './Item';
 
 import styles from './ItemList.module.scss';
+import { getListSummary } from '../../helpers/shoppingListItemHelpers';
 
 
 type ItemListProps = {
@@ -35,6 +37,20 @@ export const ItemList: React.FC<ItemListProps> = ({ listId, shoppingItems, dataS
     const handleDeleteClick = async (id: string) => {
         await ListService.deleteItem(listId, id);
     }
+
+    const renderSummary = () => {
+        const { totalPrice, remainingTotalPrice } = getListSummary(shoppingItems);
+
+        if (!Number(totalPrice)) return null;
+
+        return (
+            <Summary
+                totalPrice={totalPrice}
+                remainingTotalPrice={remainingTotalPrice}
+            />
+        )
+    }
+
 
     const items = useMemo(() => {
         return shoppingItems.map(item => {
@@ -74,16 +90,22 @@ export const ItemList: React.FC<ItemListProps> = ({ listId, shoppingItems, dataS
     )
 
     return (
-        <div className={styles.list}>
+        <div className={styles.wrapper}>
             {!items.length ? (
                 <div className={styles.noItems}>
                     <MdOutlineMoodBad className={styles.noItemsIcon} />
                     <div className={styles.noItemsText}>Список пуст</div>
                 </div>
             ) : (
-                <TransitionGroup>
-                    {items}
-                </TransitionGroup>
+                <>
+                    <div className={styles.list}>
+                        <TransitionGroup>
+                            {items}
+                        </TransitionGroup>
+                    </div>
+                    
+                    {renderSummary()}
+                </>
             )}
         </div>
     );

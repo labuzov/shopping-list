@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { IconType } from 'react-icons';
 
 import { BottomDrawerButton, BottomDrawerButtonColors } from './BottomDrawerButton';
@@ -19,7 +19,7 @@ export type BottomDrawerButton = {
 }
 
 export type BottomDrawerProps = OverlayComponentBase & {
-    header?: string | JSX.Element;
+    header?: string | ReactNode;
     buttons?: BottomDrawerButton[];
 };
 

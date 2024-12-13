@@ -1,10 +1,10 @@
-import { useContext, useEffect } from 'react';
+import { ReactNode, useContext, useEffect } from 'react';
 
 import { HeaderContext } from '@/providers/HeaderProvider';
 
 
 type HeaderOptions = {
-    content?: JSX.Element | null;
+    content?: ReactNode | null;
     title?: string;
 }
 

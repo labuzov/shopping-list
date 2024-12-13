@@ -19,6 +19,7 @@ class ListService {
     }
 
     public async deleteList(listId: string) {
+        await this.clearList(listId);
         await deleteDoc(this._getListRef(listId));
     }
 

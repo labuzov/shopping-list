@@ -1,11 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
-import { PropsWithChildren, createContext, useState } from 'react';
+import { PropsWithChildren, ReactNode, createContext, useState } from 'react';
 
 
 type ContextValue = {
     title: string;
-    content: JSX.Element | null;
-    setContent: (content: JSX.Element) => void;
+    content: ReactNode | null;
+    setContent: (content: ReactNode) => void;
     setTitle: (title: string) => void;
     reset: () => void;
 }
@@ -13,10 +13,10 @@ type ContextValue = {
 export const HeaderContext = createContext<ContextValue>(null!);
 
 const HeaderProvider = ({ children }: PropsWithChildren) => {
-    const [content, setHeaderContent] = useState<JSX.Element | null>(null);
+    const [content, setHeaderContent] = useState<ReactNode | null>(null);
     const [title, setHeaderTitle] = useState('');
 
-    const setContent = (content: JSX.Element | null) => {
+    const setContent = (content: ReactNode | null) => {
         setHeaderContent(content);
     }
 

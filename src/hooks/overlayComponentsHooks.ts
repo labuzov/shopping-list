@@ -1,4 +1,4 @@
-import { useContext, useRef } from 'react';
+import { ReactNode, useContext, useRef } from 'react';
 import { OverlayComponentContext, OverlayComponent } from '@/providers/OverlayComponentProvider';
 import { ConfirmationModal, ConfirmationModalProps } from '@/components/Modal/ConfirmationModal';
 
@@ -26,7 +26,7 @@ export const useOverlayComponent = () => {
         }).finally(() => removeComponent(id));
     }
 
-    const showConfirmationModal = async (message?: string | JSX.Element, title?: string | JSX.Element) => {
+    const showConfirmationModal = async (message?: string | ReactNode, title?: string | ReactNode) => {
         const handleConfirm = () => {
             closeOverlayComponent(true);
         }

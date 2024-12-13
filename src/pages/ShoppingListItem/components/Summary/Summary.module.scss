@@ -1,0 +1,28 @@
+.summary {
+    padding: 1rem;
+    color: var(--color-text-secondary);
+    animation: show 300ms;
+
+    span {
+        font-weight: 700;
+    }
+}
+
+.row {
+    margin-bottom: 0.5rem;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+@keyframes show {
+    0% {
+        opacity: 0;
+        transform: translateX(1rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

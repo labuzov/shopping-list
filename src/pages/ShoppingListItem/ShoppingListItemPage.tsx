@@ -4,21 +4,21 @@ import { MdDeleteOutline, MdOutlineEditOff, MdOutlineModeEditOutline } from 'rea
 
 import { ShoppingItem } from '@/models/shoppingListModels';
 import { useOverlayComponent } from '@/hooks/overlayComponentsHooks';
+import { FirestoreDataOrdering, useFirestoreData } from '@/hooks/firestoreHooks';
+import { useHeaderOptions } from '@/hooks/headerHooks';
 import ListService from '@/services/ListService';
 
-import { ItemList } from '@/pages/List/components/ItemList/ItemList';
 import { Container } from '@/components/Container/Container';
 import { AddItemsButton } from '@/components/AddItemsButton/AddItemsButton';
-import { FirestoreDataOrdering, useFirestoreData } from '@/hooks/firestoreHooks';
 import { IconButton } from '@/components/IconButton/IconButton';
+import { ItemList } from './components/ItemList/ItemList';
 
-import styles from './ShoppingListPage.module.scss';
-import { useHeaderOptions } from '@/hooks/headerHooks';
+import styles from './ShoppingListItemPage.module.scss';
 
 
 const ordering: FirestoreDataOrdering = { field: 'createdAt', directionStr: 'asc' };
 
-const ShoppingListPage = () => {
+const ShoppingListItemPage = () => {
     const [editMode, setEditMode] = useState(false);
 
     const { id } = useParams<{ id: string }>();
@@ -67,4 +67,4 @@ const ShoppingListPage = () => {
     );
 }
 
-export default ShoppingListPage;
+export default ShoppingListItemPage;

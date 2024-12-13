@@ -11,7 +11,7 @@ import Layout from '@/components/Layout/Layout';
 import Page404 from './pages/Errors/Page404';
 import './styles/App.scss';
 
-const ShoppingListPage = React.lazy(() => import('@/pages/List/ShoppingListPage'));
+const ShoppingListItemPage = React.lazy(() => import('@/pages/ShoppingListItem/ShoppingListItemPage'));
 const SettingsPage = React.lazy(() => import('@/pages/Settings/SettingsPage'));
 
 const App = () => {
@@ -28,8 +28,8 @@ const App = () => {
             <Layout>
                 <Suspense fallback={<Loading fillContainer />}>
                     <Routes>
-                        <Route path="" element={<ShoppingListPage />} />
-                        <Route path="list/:id" element={<ShoppingListPage />} />
+                        <Route path="" element={<ShoppingListItemPage />} />
+                        <Route path="list/:id" element={<ShoppingListItemPage />} />
 
                         <Route path="settings" element={<SettingsPage />} />
 

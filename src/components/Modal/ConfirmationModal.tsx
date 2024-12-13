@@ -1,9 +1,10 @@
+import { ReactNode } from 'react';
 import { Modal, ModalButton, ModalProps } from '@/components/Modal/Modal';
 import { ButtonType } from '../Button/Button';
 
 
 export type ConfirmationModalProps = ModalProps & {
-    message?: string | JSX.Element;
+    message?: string | ReactNode;
     cancelButtonText?: string;
     confirmButtonText?: string;
     onConfirm: () => void;

@@ -1,4 +1,4 @@
-import { CSSProperties, useRef } from 'react';
+import { CSSProperties, ReactNode, useRef } from 'react';
 import classNames from 'classnames';
 import { MdClose } from 'react-icons/md';
 
@@ -24,13 +24,13 @@ export type ModalButton = {
 }
 
 export type ModalProps = OverlayComponentBase & {
-    title?: string | JSX.Element;
+    title?: string | ReactNode;
     className?: string;
     width?: number;
     buttons?: ModalButton[];
     isLoading?: boolean;
     children?: React.ReactNode;
-    footerRender?: () => JSX.Element;
+    footerRender?: () => ReactNode;
 }
 
 export const Modal: React.FC<ModalProps> = ({
