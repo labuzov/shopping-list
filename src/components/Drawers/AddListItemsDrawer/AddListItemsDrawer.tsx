@@ -3,13 +3,13 @@ import { MdArrowBack } from 'react-icons/md';
 
 import { ShoppingItem } from '@/models/shoppingListModels';
 
-import { Drawer } from '../Drawers/Drawer';
-import { OverlayComponentBase } from '../OverlayComponentsContainer';
+import { Drawer } from '../Drawer';
+import { OverlayComponentBase } from '../../OverlayComponentsContainer/OverlayComponentsContainer';
 import styles from './AddListItemsDrawer.module.scss';
-import { Textarea } from '../FormControls/Textarea/Textarea';
-import { Button } from '../Button/Button';
-import { IconButton } from '../IconButton/IconButton';
-import { Label } from '../Label/Label';
+import { Textarea } from '../../FormControls/Textarea/Textarea';
+import { Button } from '../../Button/Button';
+import { IconButton } from '../../IconButton/IconButton';
+import { Label } from '../../Label/Label';
 import { useLoading } from '@/hooks/loadingHooks';
 import ListService from '@/services/ListService';
 
@@ -34,7 +34,7 @@ export const AddListItemsDrawer: React.FC<AddListItemsDrawerProps> = ({ listId, 
         })
 
         await addToLoading(() => ListService.addItems(listId, shoppingItems));
-        onClose();
+        onClose?.();
     }
 
     return (

@@ -11,6 +11,10 @@
         background-color: var(--color-icon-button-bg-hover);
     }
 
+    &:active {
+        transform: scale(0.94);
+    }
+
     svg {
         width: 60%;
         height: 60%;

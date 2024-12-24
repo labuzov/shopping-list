@@ -5,7 +5,7 @@ import { useLoading } from '@/hooks/loadingHooks';
 import { ShoppingList, ShoppingListIcon } from '@/models/shoppingListModels';
 import ListService from '@/services/ListService';
 
-import { OverlayComponentBase } from '@/components/OverlayComponentsContainer';
+import { OverlayComponentBase } from '@/components/OverlayComponentsContainer/OverlayComponentsContainer';
 import { Label } from '@/components/Label/Label';
 import { Input } from '@/components/FormControls/Input/Input';
 import { IconButton } from '@/components/IconButton/IconButton';

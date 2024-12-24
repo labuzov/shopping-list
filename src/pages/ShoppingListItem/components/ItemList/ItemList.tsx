@@ -1,10 +1,10 @@
-import { createRef, useMemo } from 'react';
+import { createRef, useContext, useMemo } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { MdOutlineMoodBad } from 'react-icons/md';
 
 import { ShoppingItem } from '@/models/shoppingListModels';
-import { useOverlayComponent } from '@/hooks/overlayComponentsHooks';
 import { FirestoreData, FirestoreDataStatus } from '@/hooks/firestoreHooks';
+import { OverlayComponentContext } from '@/providers/OverlayComponentProvider';
 import ListService from '@/services/ListService';
 
 import { EditItemModal } from '@/components/Modal/EditItemModal';
@@ -24,14 +24,14 @@ type ItemListProps = {
 }
 
 export const ItemList: React.FC<ItemListProps> = ({ listId, shoppingItems, dataStatus, editMode }) => {
-    const { showOverlayComponent, closeOverlayComponent } = useOverlayComponent();
+    const { showComponent } = useContext(OverlayComponentContext);
 
     const handleClick = async (id: string, isDone: boolean) => {
         await ListService.updateItem(listId, id, { isDone });
     }
 
     const handleEditClick = async (item: FirestoreData<ShoppingItem>) => {
-        await showOverlayComponent(EditItemModal, { item, listId, onClose: closeOverlayComponent });
+        await showComponent(EditItemModal, { item, listId });
     }
 
     const handleDeleteClick = async (id: string) => {
@@ -51,6 +51,14 @@ export const ItemList: React.FC<ItemListProps> = ({ listId, shoppingItems, dataS
         )
     }
 
+    const renderNoItems = () => {
+        return (
+            <div className={styles.noItems}>
+                <MdOutlineMoodBad className={styles.noItemsIcon} />
+                <div className={styles.noItemsText}>Список пуст</div>
+            </div>
+        );
+    }
 
     const items = useMemo(() => {
         return shoppingItems.map(item => {
@@ -92,10 +100,9 @@ export const ItemList: React.FC<ItemListProps> = ({ listId, shoppingItems, dataS
     return (
         <div className={styles.wrapper}>
             {!items.length ? (
-                <div className={styles.noItems}>
-                    <MdOutlineMoodBad className={styles.noItemsIcon} />
-                    <div className={styles.noItemsText}>Список пуст</div>
-                </div>
+                <>
+                    {renderNoItems()}
+                </>
             ) : (
                 <>
                     <div className={styles.list}>

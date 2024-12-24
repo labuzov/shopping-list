@@ -1,6 +1,9 @@
-import { useOverlayComponent } from '@/hooks/overlayComponentsHooks';
 
-import { AddListItemsDrawer } from './AddListItemsDrawer';
+import { useContext } from 'react';
+
+import { OverlayComponentContext } from '@/providers/OverlayComponentProvider';
+
+import { AddListItemsDrawer } from '@/components/Drawers/AddListItemsDrawer/AddListItemsDrawerNew';
 import styles from './AddItemsButton.module.scss';
 
 
@@ -9,10 +12,10 @@ type AddItemsButtonProps = {
 }
 
 export const AddItemsButton: React.FC<AddItemsButtonProps> = ({ listId }) => {
-    const { showOverlayComponent, closeOverlayComponent } = useOverlayComponent();
+    const { showComponent } = useContext(OverlayComponentContext);
 
     const handleClick = () => {
-        showOverlayComponent(AddListItemsDrawer, { listId, onClose: closeOverlayComponent });
+        showComponent(AddListItemsDrawer, { listId });
     }
 
     return (

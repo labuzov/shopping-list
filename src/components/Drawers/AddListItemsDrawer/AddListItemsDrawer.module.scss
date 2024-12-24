@@ -1,0 +1,92 @@
+.paper {
+    width: calc(100% - 3rem);
+    max-width: 450px;
+    padding: 1.5rem;
+    padding-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin: 0 -0.75rem;
+
+    // svg {
+    //     width: 1.5rem;
+    //     height: 1.5rem;
+    // }
+    
+    .title {
+        margin-left: 0.5rem;
+        font-weight: 500;
+        font-size: 1.2rem;
+    }
+}
+
+.content {
+    margin: 1.5rem 0;
+}
+
+.divider {
+    display: flex;
+    flex-grow: 1;
+}
+
+.btn {
+    width: 100%;
+}
+
+.table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+
+    th {
+        padding: 0.5rem;
+        text-align: left;
+        color: var(--color-text-secondary);
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .thPrice,
+    .thAmount {
+        width: 70px;
+    }
+
+    tbody {
+        
+    }
+
+    tbody tr:first-child td:first-child {
+        border-top-left-radius: 5px;
+      }
+      
+      tbody tr:first-child td:last-child {
+        border-top-right-radius: 5px;
+      }
+      
+      tbody tr:last-child td:first-child {
+        border-bottom-left-radius: 5px;
+      }
+      
+      tbody tr:last-child td:last-child {
+        border-bottom-right-radius: 5px;
+      }
+
+    td {
+        padding: 0;
+        border: 2px solid var(--color-input-border);
+    
+        input {
+            width: 100%;
+            padding: 0.5rem;
+            box-sizing: border-box;
+            border: none;
+            outline: none;
+            font-size: inherit;
+            color: inherit;
+        }
+    }
+}

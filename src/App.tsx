@@ -5,7 +5,7 @@ import { AppViewContext } from '@/providers/AppViewProvider';
 
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { Loading } from '@/components/Loading/Loading';
-import { OverlayComponentsContainer } from '@/components/OverlayComponentsContainer';
+import { OverlayComponentsContainer } from '@/components/OverlayComponentsContainer/OverlayComponentsContainer';
 import Layout from '@/components/Layout/Layout';
 
 import Page404 from './pages/Errors/Page404';

@@ -7,18 +7,19 @@ export type ConfirmationModalProps = ModalProps & {
     message?: string | ReactNode;
     cancelButtonText?: string;
     confirmButtonText?: string;
-    onConfirm: () => void;
+    onConfirm?: () => void;
 }
 
 export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
     title, message, cancelButtonText, confirmButtonText, onConfirm, onClose, ...props
 }) => {
     const handleConfirm = () => {
-        onConfirm();
+        onConfirm?.();
+        onClose?.(true);
     }
 
     const handleCancel = () => {
-        onClose();
+        onClose?.(false);
     }
 
     const getButtons = () => {
@@ -40,7 +41,7 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
         <Modal
             title={modalTitle}
             buttons={getButtons()}
-            onClose={onClose}
+            onClose={handleCancel}
             {...props}
         >
             {modalMessage}

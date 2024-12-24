@@ -4,7 +4,7 @@ import { IconType } from 'react-icons';
 import { BottomDrawerButton, BottomDrawerButtonColors } from './BottomDrawerButton';
 import { Container } from '../../Container/Container';
 import { Drawer } from '../Drawer';
-import { OverlayComponentBase } from '../../OverlayComponentsContainer';
+import { OverlayComponentBase } from '../../OverlayComponentsContainer/OverlayComponentsContainer';
 import styles from './BottomDrawer.module.scss';
 
 

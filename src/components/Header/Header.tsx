@@ -2,7 +2,7 @@ import { FC, useContext } from 'react';
 import { MdMenu } from 'react-icons/md';
 
 import { FirestoreDataOrdering, useFirestoreData } from '@/hooks/firestoreHooks';
-import { useOverlayComponent } from '@/hooks/overlayComponentsHooks';
+import { OverlayComponentContext } from '@/providers/OverlayComponentProvider';
 import { HeaderContext } from '@/providers/HeaderProvider';
 import { ShoppingList } from '@/models/shoppingListModels';
 
@@ -16,12 +16,13 @@ const ordering: FirestoreDataOrdering = { field: 'createdAt', directionStr: 'asc
 
 export const Header: FC = () => {
     const { title, content } = useContext(HeaderContext);
-    const { showOverlayComponent, closeOverlayComponent } = useOverlayComponent();
+    const { showComponent } = useContext(OverlayComponentContext);
+    console.log('render');
 
     const { data: lists } = useFirestoreData<ShoppingList>(`lists`, { ordering });
 
     const handleMenuButtonClick = () => {
-        showOverlayComponent(MenuPanelDrawer, { lists, onClose: closeOverlayComponent });
+        showComponent(MenuPanelDrawer, { lists });
     }
 
     return (

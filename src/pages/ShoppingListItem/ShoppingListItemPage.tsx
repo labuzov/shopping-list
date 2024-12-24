@@ -1,15 +1,16 @@
-import { useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { MdDeleteOutline, MdOutlineEditOff, MdOutlineModeEditOutline } from 'react-icons/md';
 
 import { ShoppingItem } from '@/models/shoppingListModels';
-import { useOverlayComponent } from '@/hooks/overlayComponentsHooks';
 import { FirestoreDataOrdering, useFirestoreData } from '@/hooks/firestoreHooks';
 import { useHeaderOptions } from '@/hooks/headerHooks';
 import ListService from '@/services/ListService';
+import { OverlayComponentContext } from '@/providers/OverlayComponentProvider';
 
 import { Container } from '@/components/Container/Container';
 import { AddItemsButton } from '@/components/AddItemsButton/AddItemsButton';
+import { ConfirmationModal } from '@/components/Modal/ConfirmationModal';
 import { IconButton } from '@/components/IconButton/IconButton';
 import { ItemList } from './components/ItemList/ItemList';
 
@@ -26,10 +27,10 @@ const ShoppingListItemPage = () => {
 
     const { data, dataStatus } = useFirestoreData<ShoppingItem>(`lists/${listId}/items`, { ordering });
 
-    const { showConfirmationModal } = useOverlayComponent();
+    const { showComponent } = useContext(OverlayComponentContext);
 
     const handleDelete = async () => {
-        if (!await showConfirmationModal('Очистить весь список?')) return;
+        if (!await showComponent(ConfirmationModal, { message: 'Очистить весь список?' })) return;
 
         ListService.clearList(listId);
     }

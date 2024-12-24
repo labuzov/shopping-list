@@ -6,7 +6,7 @@ import { Loading } from '@/components/Loading/Loading';
 import { Button, ButtonType } from '@/components/Button/Button';
 import styles from './Modal.module.scss';
 import { CSSTransition } from 'react-transition-group';
-import { OverlayComponentBase } from '../OverlayComponentsContainer';
+import { OverlayComponentBase } from '../OverlayComponentsContainer/OverlayComponentsContainer';
 
 
 const DEFAULT_WIDTH = 500;

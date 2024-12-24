@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { ShoppingList } from '@/models/shoppingListModels';
 
-import { OverlayComponentBase } from '@/components/OverlayComponentsContainer';
+import { OverlayComponentBase } from '@/components/OverlayComponentsContainer/OverlayComponentsContainer';
 import { Drawer } from '@/components/Drawers/Drawer';
 
 import { MenuPanelButton } from './MenuPanelButton/MenuPanelButton';
