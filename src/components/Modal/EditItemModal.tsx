@@ -32,11 +32,11 @@ export const EditItemModal: React.FC<EditItemModalProps> = ({
         }
 
         await addToLoading(() => ListService.updateItem(listId, item.id, newData));
-        onClose();
+        onClose?.();
     }
 
     const handleCancel = () => {
-        onClose();
+        onClose?.();
     }
 
     const getButtons = () => {

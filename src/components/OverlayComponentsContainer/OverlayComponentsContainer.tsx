@@ -25,7 +25,7 @@ export const OverlayComponentsContainer: React.FC = () => {
     const scrollbarWidth = useRef<number | null>(null);
 
     useEffect(() => {
-        if (components.length && isScrollbarVisible()) {
+        if (visibleIds.length && isScrollbarVisible()) {
             const width = scrollbarWidth.current ?? getScrollbarWidth();
             scrollbarWidth.current = width;
 
@@ -33,7 +33,7 @@ export const OverlayComponentsContainer: React.FC = () => {
         } else {
             removeScrollbarPadding();
         }
-    }, [components]);
+    }, [visibleIds]);
 
     const content = useMemo(() => {
         return components.map((component, index) => {

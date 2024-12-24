@@ -24,12 +24,12 @@ export const MenuPanelDrawer: React.FC<MenuPanelDrawerProps> = ({
 
     const handleHomeButtonClick = () => {
         navigate('/');
-        onClose();
+        onClose?.();
     }
 
     const handleSettingsButtonClick = () => {
         navigate('/settings');
-        onClose();
+        onClose?.();
     }
 
     const listButtons = useMemo(() => {
@@ -45,7 +45,7 @@ export const MenuPanelDrawer: React.FC<MenuPanelDrawerProps> = ({
                         Icon={getShoppingListIcon(list.icon)}
                         onClick={() => {
                             navigate(`/list/${list.id}`);
-                            onClose();
+                            onClose?.();
                         }}
                     />
                 ))}

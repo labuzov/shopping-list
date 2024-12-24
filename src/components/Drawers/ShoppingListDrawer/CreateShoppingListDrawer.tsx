@@ -34,7 +34,7 @@ export const CreateShoppingListDrawer: React.FC<CreateShoppingListDrawerProps> =
         };
 
         await addToLoading(() => ListService.createList(list));
-        onClose();
+        onClose?.();
     }
 
     return (

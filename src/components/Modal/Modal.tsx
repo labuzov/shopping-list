@@ -40,7 +40,7 @@ export const Modal: React.FC<ModalProps> = ({
     const ref = useRef<HTMLDivElement>(null);
 
     const handleClose = () => {
-        onClose();
+        onClose?.();
     }
 
     const renderButtons = (buttons: ModalButton[]) => (

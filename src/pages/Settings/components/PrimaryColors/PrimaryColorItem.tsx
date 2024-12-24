@@ -1,7 +1,7 @@
 import { AiOutlineCheck } from 'react-icons/ai';
 import classNames from 'classnames';
 
-import { PrimaryColors } from '@/providers/AppViewProvider';
+import { PrimaryColors } from '@/stores/AppConfigStore';
 
 import styles from './PrimaryColors.module.scss';
 
