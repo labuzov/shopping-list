@@ -1,23 +1,25 @@
-import { ReactNode, useContext, useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 
-import { HeaderContext } from '@/providers/HeaderProvider';
+import { useHeaderStore } from '@/stores/HeaderStore';
 
 
 type HeaderOptions = {
-    content?: ReactNode | null;
+    contentOnRight?: ReactNode | null;
     title?: string;
 }
 
-export const useHeaderOptions = ({ content, title }: HeaderOptions) => {
-    const { setContent, setTitle, reset } = useContext(HeaderContext);
+export const useHeaderOptions = ({ contentOnRight, title }: HeaderOptions) => {
+    const setTitle = useHeaderStore(state => state.setTitle);
+    const setContentOnRight = useHeaderStore(state => state.setContentOnRight);
+    const reset = useHeaderStore(state => state.reset);
 
     useEffect(() => {
-        if (content) setContent(content);
+        if (contentOnRight) setContentOnRight(contentOnRight);
         if (title) setTitle(title);
 
         return () => {
             reset();
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [content, title]);
+    }, [contentOnRight, title]);
 }

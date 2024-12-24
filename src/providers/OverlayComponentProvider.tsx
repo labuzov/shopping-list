@@ -32,9 +32,9 @@ const OverlayComponentProvider = ({ children }: PropsWithChildren) => {
     const showComponent = async <P, T>(component: React.FunctionComponent<P>, props?: P) => {
         const id = generateId();
         const overlayComponent: OverlayComponent = {
-          id,
-          component: component as React.FunctionComponent<unknown>,
-          props
+            id,
+            component: component as React.FunctionComponent<unknown>,
+            props
         };
     
         return new Promise<T>((resolve, reject) => {

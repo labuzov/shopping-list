@@ -1,10 +1,10 @@
-import { createRef, useContext, useMemo } from 'react';
+import { createRef, useMemo } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { MdOutlineMoodBad } from 'react-icons/md';
 
 import { ShoppingItem } from '@/models/shoppingListModels';
+import { useOverlayComponentsStore } from '@/stores/OverlayComponentsStore';
 import { FirestoreData, FirestoreDataStatus } from '@/hooks/firestoreHooks';
-import { OverlayComponentContext } from '@/providers/OverlayComponentProvider';
 import ListService from '@/services/ListService';
 
 import { EditItemModal } from '@/components/Modal/EditItemModal';
@@ -24,7 +24,7 @@ type ItemListProps = {
 }
 
 export const ItemList: React.FC<ItemListProps> = ({ listId, shoppingItems, dataStatus, editMode }) => {
-    const { showComponent } = useContext(OverlayComponentContext);
+    const showComponent = useOverlayComponentsStore(state => state.showComponent);
 
     const handleClick = async (id: string, isDone: boolean) => {
         await ListService.updateItem(listId, id, { isDone });

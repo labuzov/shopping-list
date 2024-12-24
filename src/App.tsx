@@ -1,11 +1,11 @@
-import React, { Suspense, useContext, useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { AppViewContext } from '@/providers/AppViewProvider';
+import { useAppConfigStore } from '@/stores/AppConfigStore';
 
+import { OverlayComponentsContainer } from '@/components/OverlayComponentsContainer/OverlayComponentsContainer';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { Loading } from '@/components/Loading/Loading';
-import { OverlayComponentsContainer } from '@/components/OverlayComponentsContainer/OverlayComponentsContainer';
 import Layout from '@/components/Layout/Layout';
 
 import Page404 from './pages/Errors/Page404';
@@ -15,10 +15,10 @@ const ShoppingListItemPage = React.lazy(() => import('@/pages/ShoppingListItem/S
 const SettingsPage = React.lazy(() => import('@/pages/Settings/SettingsPage'));
 
 const App = () => {
-    const { initAppView } = useContext(AppViewContext);
+    const initAppConfig = useAppConfigStore(state => state.initAppConfig);
 
     useEffect(() => {
-        initAppView();
+        initAppConfig();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

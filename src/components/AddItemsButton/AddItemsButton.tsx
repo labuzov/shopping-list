@@ -1,7 +1,4 @@
-
-import { useContext } from 'react';
-
-import { OverlayComponentContext } from '@/providers/OverlayComponentProvider';
+import { useOverlayComponentsStore } from '@/stores/OverlayComponentsStore';
 
 import { AddListItemsDrawer } from '@/components/Drawers/AddListItemsDrawer/AddListItemsDrawerNew';
 import styles from './AddItemsButton.module.scss';
@@ -12,7 +9,7 @@ type AddItemsButtonProps = {
 }
 
 export const AddItemsButton: React.FC<AddItemsButtonProps> = ({ listId }) => {
-    const { showComponent } = useContext(OverlayComponentContext);
+    const showComponent = useOverlayComponentsStore(state => state.showComponent);
 
     const handleClick = () => {
         showComponent(AddListItemsDrawer, { listId });

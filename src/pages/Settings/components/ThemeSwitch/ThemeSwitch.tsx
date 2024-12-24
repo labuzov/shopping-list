@@ -1,23 +1,23 @@
+import { AppTheme } from '@/stores/AppConfigStore';
 
-
-import { useContext } from 'react';
-
-import { AppTheme, AppViewContext } from '@/providers/AppViewProvider';
 import { Switch } from '@/components/FormControls/Switch/Switch';
 
 import styles from './ThemeSwitch.module.scss';
 
 
-export const ThemeSwitch: React.FC = () => {
-    const { appTheme, setAppTheme } = useContext(AppViewContext);
+type Props = {
+    theme: AppTheme;
+    onChange: (theme: AppTheme) => void;
+}
 
+export const ThemeSwitch: React.FC<Props> = ({ theme, onChange }) => {
     const handleDarkThemeSwitch = (isChecked: boolean) => {
         if (isChecked) {
-            setAppTheme(AppTheme.Dark);
+            onChange(AppTheme.Dark);
             return;
         }
 
-        setAppTheme(AppTheme.Light);
+        onChange(AppTheme.Light);
     }
 
     return ( 
@@ -25,7 +25,7 @@ export const ThemeSwitch: React.FC = () => {
             <div className={styles.title}>Включить темную тему</div>
             <div className={styles.switch}>
                 <Switch
-                    isChecked={appTheme === AppTheme.Dark}
+                    isChecked={theme === AppTheme.Dark}
                     onChange={handleDarkThemeSwitch}
                 />
             </div>

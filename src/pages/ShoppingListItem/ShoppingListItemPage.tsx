@@ -1,12 +1,12 @@
-import { useContext, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { MdDeleteOutline, MdOutlineEditOff, MdOutlineModeEditOutline } from 'react-icons/md';
 
-import { ShoppingItem } from '@/models/shoppingListModels';
+import { useOverlayComponentsStore } from '@/stores/OverlayComponentsStore';
 import { FirestoreDataOrdering, useFirestoreData } from '@/hooks/firestoreHooks';
+import { ShoppingItem } from '@/models/shoppingListModels';
 import { useHeaderOptions } from '@/hooks/headerHooks';
 import ListService from '@/services/ListService';
-import { OverlayComponentContext } from '@/providers/OverlayComponentProvider';
 
 import { Container } from '@/components/Container/Container';
 import { AddItemsButton } from '@/components/AddItemsButton/AddItemsButton';
@@ -27,7 +27,7 @@ const ShoppingListItemPage = () => {
 
     const { data, dataStatus } = useFirestoreData<ShoppingItem>(`lists/${listId}/items`, { ordering });
 
-    const { showComponent } = useContext(OverlayComponentContext);
+    const showComponent = useOverlayComponentsStore(state => state.showComponent);
 
     const handleDelete = async () => {
         if (!await showComponent(ConfirmationModal, { message: 'Очистить весь список?' })) return;
@@ -41,7 +41,7 @@ const ShoppingListItemPage = () => {
 
     const headerOptions = useMemo(() => {
         return {
-            content: (
+            contentOnRight: (
                 <div className={styles.actions}>
                     <IconButton Icon={editMode ? MdOutlineEditOff : MdOutlineModeEditOutline} onClick={handleEditModeClick} />
                     <IconButton Icon={MdDeleteOutline} onClick={handleDelete} />

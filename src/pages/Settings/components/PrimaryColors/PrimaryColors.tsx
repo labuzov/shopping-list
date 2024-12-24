@@ -1,23 +1,26 @@
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 
-import { AppViewContext, PrimaryColors } from '@/providers/AppViewProvider';
+import { PrimaryColors } from '@/stores/AppConfigStore';
 
 import { PrimaryColorItem } from './PrimaryColorItem';
 import styles from './PrimaryColors.module.scss';
 
 
-export const PrimaryColorList: React.FC = () => {
-    const { primaryColor, setPrimaryColor } = useContext(AppViewContext);
+type Props = {
+    color: PrimaryColors;
+    onChange: (color: PrimaryColors) => void;
+}
 
+export const PrimaryColorList: React.FC<Props> = ({ color, onChange }) => {
     const allColors = Object.values(PrimaryColors);
-    const colorItems = useMemo(() => allColors.map(color => (
+    const colorItems = useMemo(() => allColors.map(i => (
         <PrimaryColorItem
-            key={color}
-            color={color}
-            onClick={() => setPrimaryColor(color)}
-            isSelected={primaryColor === color}
+            key={i}
+            color={i}
+            onClick={() => onChange(i)}
+            isSelected={color === i}
         />
-    )), [allColors, primaryColor, setPrimaryColor]);
+    )), [allColors, color, onChange]);
 
     return ( 
         <div className={styles.container}>

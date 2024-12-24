@@ -1,3 +1,5 @@
+import { useAppConfigStore } from '@/stores/AppConfigStore';
+
 import { Container } from '@/components/Container/Container';
 import { SettingsBlock } from './components/Block/SettingsBlock';
 import { PrimaryColorList } from './components/PrimaryColors/PrimaryColors';
@@ -6,6 +8,9 @@ import styles from './SettingsPage.module.scss';
 
 
 const SettingsPage: React.FC = () => {
+    const appConfig = useAppConfigStore(state => state.appConfig);
+    const setAppTheme = useAppConfigStore(state => state.setAppTheme);
+    const setPrimaryColor = useAppConfigStore(state => state.setPrimaryColor);
 
     return (
         <>
@@ -14,13 +19,18 @@ const SettingsPage: React.FC = () => {
 
                 <div className={styles.blocks}>
                     <SettingsBlock title="Тема">
-                        <ThemeSwitch />
+                        <ThemeSwitch
+                            theme={appConfig.appTheme}
+                            onChange={setAppTheme}
+                        />
                     </SettingsBlock>
                     <SettingsBlock title="Акцентный цвет">
-                        <PrimaryColorList />
+                        <PrimaryColorList
+                            color={appConfig.primaryColor}
+                            onChange={setPrimaryColor}
+                        />
                     </SettingsBlock>
                 </div>
-
             </Container>
         </>
     );

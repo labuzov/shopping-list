@@ -1,7 +1,8 @@
-import { createElement, useContext, useEffect, useMemo, useRef } from 'react';
+import { createElement, useEffect, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
-import { OverlayComponentContext } from '@/providers/OverlayComponentProvider';
+import { useOverlayComponentsStore } from '@/stores/OverlayComponentsStore';
+
 import {
     addScrollbarPadding,
     getScrollbarWidth,
@@ -17,7 +18,10 @@ export type OverlayComponentBase = {
 }
 
 export const OverlayComponentsContainer: React.FC = () => {
-    const { components, visibleIds, closeComponentById } = useContext(OverlayComponentContext);
+    const components = useOverlayComponentsStore(state => state.components);
+    const visibleIds = useOverlayComponentsStore(state => state.visibleIds);
+    const closeComponentById = useOverlayComponentsStore(state => state.closeComponentById);
+
     const scrollbarWidth = useRef<number | null>(null);
 
     useEffect(() => {
