@@ -1,3 +1,5 @@
+@import "/src/styles/shared";
+
 .wrapper {
     display: flex;
     align-items: center;
@@ -11,9 +13,7 @@
 }
 
 .text {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-wrap: nowrap;
+    @extend %text-ellipsis;
 }
 
 .icon {

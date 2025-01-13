@@ -1,3 +1,5 @@
+@import "/src/styles/shared";
+
 .wrapper {
     height: 100%;
     transition: .3s;
@@ -29,9 +31,7 @@
         align-items: center;
         gap: 1rem;
         padding-right: 0.5rem;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
+        @extend %text-ellipsis;
     }
 
     .right {

@@ -1,3 +1,5 @@
+@import "/src/styles/shared";
+
 .header {
     height: 65px;
     position: fixed;
@@ -26,7 +28,5 @@
     margin: 0 1rem;
     font-weight: 500;
     font-size: 1.1rem;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    text-wrap: nowrap;
+    @extend %text-ellipsis;
 }

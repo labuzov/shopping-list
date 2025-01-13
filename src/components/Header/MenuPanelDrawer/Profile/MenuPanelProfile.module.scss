@@ -1,0 +1,58 @@
+@import "/src/styles/shared";
+
+.account {
+    margin-top: 0.5rem;
+    background-color: var(--color-menu-panel-account-bg);
+    cursor: pointer;
+}
+
+.accountInfo {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+
+    &Avatar {
+        margin-right: 1rem;
+
+        img {
+            width: 36px;
+            height: 36px;
+        }
+    }
+
+    &Text {
+        @extend %text-ellipsis;
+
+        &Primary {
+            @extend %text-ellipsis;
+
+            font-weight: 500;
+        }
+
+        &Secondary {
+            @extend %text-ellipsis;
+
+            margin-top: 0.25rem;
+            font-size: 0.8em;
+            color: var(--color-text-secondary);
+        }
+    }
+}
+
+.accountLogin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+    
+    &Icon {
+        display: flex;
+        margin-right: 1rem;
+        color: var(--color-menu-panel-icon);
+
+        svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+}

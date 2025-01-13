@@ -1,4 +1,4 @@
-import { createElement, useEffect, useMemo, useRef } from 'react';
+import { createElement, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useOverlayComponentsStore } from '@/stores/OverlayComponentsStore';
@@ -35,7 +35,7 @@ export const OverlayComponentsContainer: React.FC = () => {
         }
     }, [visibleIds]);
 
-    const content = useMemo(() => {
+    const renderContent = () => {
         return components.map((component, index) => {
             const props = component.props as React.Attributes & OverlayComponentBase ?? {};
 
@@ -50,11 +50,11 @@ export const OverlayComponentsContainer: React.FC = () => {
                 </div>
             ), document.body);
         });
-    }, [closeComponentById, components, visibleIds]);
+    };
 
     return (
         <>
-            {content}
+            {renderContent()}
         </>
     );
 }

@@ -22,7 +22,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
     render() {
         if (this.state.errorInfo) {
             return (
-                <div className="p-5">
+                <div style={{ padding: '1rem' }}>
                     <h2>Произошла ошибка</h2>
                     <details style={{ whiteSpace: 'pre-wrap', color: 'red' }}>
                         {this.state.error && this.state.error.toString()}

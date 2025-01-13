@@ -25,6 +25,7 @@
     --color-menu-panel-logo: #f2f5f5;
     --color-menu-panel-icon: #777;
     --color-menu-panel-button-bg-hover: #f6f6f6;
+    --color-menu-panel-account-bg: #f6f6f6;
 
     --color-divider: #ddd;
 
@@ -66,6 +67,9 @@
     --color-drawer-paper-button-bg: #f6f6f6;
     --color-drawer-paper-button-danger: rgb(221, 50, 50);
     --color-drawer-paper-button-divider: #ddd;
+
+    --color-skeleton-bg-1: #eee;
+    --color-skeleton-bg-2: #e6e6e6;
 }
 
 body[data-theme="dark"] {
@@ -93,6 +97,7 @@ body[data-theme="dark"] {
     --color-menu-panel-logo: #f2f5f5;
     --color-menu-panel-icon: #777;
     --color-menu-panel-button-bg-hover: #333;
+    --color-menu-panel-account-bg: #333;
 
     --color-button-outline-secondary-bg: #181818;
     --color-button-outline-secondary-bg-hover: #191919;
@@ -115,6 +120,9 @@ body[data-theme="dark"] {
     --color-drawer-paper-button-bg: #333;
     --color-drawer-paper-button-danger: rgb(216, 64, 64);
     --color-drawer-paper-button-divider: #555;
+
+    --color-skeleton-bg-1: #262626;
+    --color-skeleton-bg-2: #303030;
 }
 
 body[data-color="purple"] {
