@@ -80,6 +80,7 @@ export const useFirestoreData = <T>(path: string, options?: FirestoreDataOptions
 
     return {
         data,
-        dataStatus: status
+        dataStatus: status,
+        setData
     }
 }

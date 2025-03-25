@@ -10,6 +10,7 @@ export enum ShoppingListIcon {
 export type ShoppingList = {
     title?: string;
     icon?: ShoppingListIcon;
+    order?: string[];
     createdAt?: number;
     updatedAt?: number;
 }

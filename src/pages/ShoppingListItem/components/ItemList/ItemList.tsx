@@ -1,10 +1,12 @@
-import { createRef, useMemo } from 'react';
+import { createRef, useMemo, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { MdOutlineMoodBad } from 'react-icons/md';
+import { Active, DndContext, DragEndEvent, DragOverlay, DragStartEvent, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 
 import { ShoppingItem } from '@/models/shoppingListModels';
 import { useOverlayComponentsStore } from '@/stores/OverlayComponentsStore';
-import { FirestoreData, FirestoreDataStatus } from '@/hooks/firestoreHooks';
+import { FirestoreData } from '@/hooks/firestoreHooks';
 import ListService from '@/services/ListService';
 
 import { EditItemModal } from '@/components/Modal/EditItemModal';
@@ -12,19 +14,28 @@ import { Loading } from '@/components/Loading/Loading';
 import { Summary } from '../Summary/Summary';
 import { Item } from './Item';
 
-import styles from './ItemList.module.scss';
 import { getListSummary } from '../../helpers/shoppingListItemHelpers';
+import styles from './ItemList.module.scss';
 
 
 type ItemListProps = {
     listId: string;
     shoppingItems: FirestoreData<ShoppingItem>[];
-    dataStatus: FirestoreDataStatus;
+    isLoading?: boolean;
     editMode?: boolean;
+    onOrderChange: (order: string[]) => void;
 }
 
-export const ItemList: React.FC<ItemListProps> = ({ listId, shoppingItems, dataStatus, editMode }) => {
+export const ItemList: React.FC<ItemListProps> = ({
+    listId, shoppingItems, isLoading, editMode, onOrderChange
+}) => {
+    const [activeDraggable, setActiveDraggable] = useState<Active | null>(null);
+
     const showComponent = useOverlayComponentsStore(state => state.showComponent);
+
+    const sensors = useSensors(
+        useSensor(PointerSensor)
+    );
 
     const handleClick = async (id: string, isDone: boolean) => {
         await ListService.updateItem(listId, id, { isDone });
@@ -36,6 +47,44 @@ export const ItemList: React.FC<ItemListProps> = ({ listId, shoppingItems, dataS
 
     const handleDeleteClick = async (id: string) => {
         await ListService.deleteItem(listId, id);
+    }
+
+    const handleDragStart = (event: DragStartEvent) => {
+        setActiveDraggable(event.active);
+    }
+
+    const handleDragEnd = (event: DragEndEvent) => {
+        const { over, active } = event;
+
+        if (over && active.id !== over?.id) {
+            const activeIndex = shoppingItems.findIndex(({ id }) => id === active.id);
+            const overIndex = shoppingItems.findIndex(({ id }) => id === over.id);
+
+            const newItems = arrayMove(shoppingItems, activeIndex, overIndex);
+            const newOrder = newItems.map(({ id }) => id);
+
+            ListService.updateList(listId, { order: newOrder });
+
+            onOrderChange(newOrder);
+        }
+
+        setActiveDraggable(null);
+    }
+
+    const handleDragCancel = () => {
+        setActiveDraggable(null);
+    }
+
+    const renderItem = (item: FirestoreData<ShoppingItem>) => {
+        return (
+            <Item
+                item={item}
+                editMode={editMode}
+                onClick={() => handleClick(item.id, !item.isDone)}
+                onEditClick={() => handleEditClick(item)}
+                onDeleteClick={() => handleDeleteClick(item.id)}
+            />
+        )
     }
 
     const renderSummary = () => {
@@ -60,6 +109,10 @@ export const ItemList: React.FC<ItemListProps> = ({ listId, shoppingItems, dataS
         );
     }
 
+    const activeDraggableItem = useMemo(() => {
+        return activeDraggable ? shoppingItems.find(item => item.id === activeDraggable.id) : null;
+    }, [activeDraggable, shoppingItems]);
+
     const items = useMemo(() => {
         return shoppingItems.map(item => {
             const ref = createRef<HTMLDivElement>();
@@ -77,13 +130,7 @@ export const ItemList: React.FC<ItemListProps> = ({ listId, shoppingItems, dataS
                     }}
                 >
                     <div ref={ref} className={styles.itemWrapper}>
-                        <Item
-                            item={item}
-                            editMode={editMode}
-                            onClick={() => handleClick(item.id, !item.isDone)}
-                            onEditClick={() => handleEditClick(item)}
-                            onDeleteClick={() => handleDeleteClick(item.id)}
-                        />
+                        {renderItem(item)}
                     </div>
                 </CSSTransition>
             )
@@ -91,7 +138,7 @@ export const ItemList: React.FC<ItemListProps> = ({ listId, shoppingItems, dataS
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [shoppingItems, editMode]);
 
-    if (dataStatus === FirestoreDataStatus.Loading) return (
+    if (isLoading) return (
         <div className={styles.loading}>
             <Loading fillContainer />
         </div>
@@ -105,11 +152,23 @@ export const ItemList: React.FC<ItemListProps> = ({ listId, shoppingItems, dataS
                 </>
             ) : (
                 <>
-                    <div className={styles.list}>
-                        <TransitionGroup>
-                            {items}
-                        </TransitionGroup>
-                    </div>
+                    <DndContext
+                        sensors={sensors}
+                        onDragStart={handleDragStart}
+                        onDragEnd={handleDragEnd}
+                        onDragCancel={handleDragCancel}
+                    >
+                        <SortableContext items={shoppingItems} id="order">
+                            <div className={styles.list}>
+                                <TransitionGroup>
+                                    {items}
+                                </TransitionGroup>
+                            </div>
+                        </SortableContext>
+                        <DragOverlay>
+                            {activeDraggableItem ? renderItem(activeDraggableItem) : null}
+                        </DragOverlay>
+                    </DndContext>
                     
                     {renderSummary()}
                 </>

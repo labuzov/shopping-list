@@ -27,10 +27,12 @@
     cursor: pointer;
 
     .left {
+        margin-left: -50px;
         display: flex;
         align-items: center;
         gap: 1rem;
         padding-right: 0.5rem;
+        transition: .2s;
         @extend %text-ellipsis;
     }
 
@@ -55,16 +57,29 @@
         background-color: var(--color-bg);
 
         .left {
-            transition: .2s;
             color: var(--color-text-disabled);
         }
     }
 
     &.editMode {
+        .left {
+            margin-left: 0;
+        }
+        .dragAction {
+            opacity: 1;
+            visibility: visible;
+        }
         .actions {
             opacity: 1;
             visibility: visible;
         }
+    }
+
+    .dragAction {
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1;
+        transition: .1s ease-in-out;
     }
 
     .actions {

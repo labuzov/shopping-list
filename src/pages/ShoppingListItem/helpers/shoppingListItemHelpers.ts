@@ -1,4 +1,5 @@
-import { ShoppingItem } from '@/models/shoppingListModels';
+import { FirestoreData } from '@/hooks/firestoreHooks';
+import { ShoppingItem, ShoppingList } from '@/models/shoppingListModels';
 
 
 export const getListSummary = (items: ShoppingItem[]) => {
@@ -30,4 +31,32 @@ export const getListSummary = (items: ShoppingItem[]) => {
 
 const isNumber = (value: number) => {
     return !isNaN(value) && typeof value === 'number';
+}
+
+export const getSortedShoppingItems = (
+    items?: FirestoreData<ShoppingItem>[],
+    lists?: FirestoreData<ShoppingList>[]
+): FirestoreData<ShoppingItem>[] => {
+    if (!items) return [];
+
+    const order = lists?.[0]?.order;
+    if (!order) return items;
+
+    const sortedItems = [];
+
+    for (const itemId of order) {
+        const item = items.find(({ id }) => itemId === id);
+        if (!item) continue;
+
+        sortedItems.push(item);
+    }
+
+    for (const shoppingItem of items) {
+        const isInList = sortedItems.find(({ id }) => id === shoppingItem.id);
+        if (isInList) continue;
+
+        sortedItems.push(shoppingItem);
+    }
+
+    return sortedItems;
 }
