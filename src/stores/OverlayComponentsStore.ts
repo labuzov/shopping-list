@@ -11,23 +11,26 @@ export type OverlayComponent = {
 
 type ComponentPromise = {
     componentId: string;
-    resolve: (value: unknown) => void;
-    reject: (value: unknown) => void;
+    resolve: (value: Payload) => void;
+    reject: (value: Payload) => void;
 }
+
+type Payload = unknown;
 
 type OverlayComponentsState = {
     components: OverlayComponent[];
     visibleIds: string[];
     promises: ComponentPromise[];
     showComponent: <P, T>(component: React.FunctionComponent<P>, props?: P) => Promise<T>;
-    closeComponentById: (id: string, payload?: unknown) => void;
+    closeComponentById: (id: string, payload?: Payload) => void;
+    closeLastComponent: (payload?: Payload) => void;
 }
 
 const generateId = () => {
     return Math.random().toString(36).substring(2, 8);
 };
 
-export const useOverlayComponentsStore = create<OverlayComponentsState>(set => ({
+export const useOverlayComponentsStore = create<OverlayComponentsState>((set, get) => ({
     components: [],
     visibleIds: [],
     promises: [],
@@ -44,8 +47,8 @@ export const useOverlayComponentsStore = create<OverlayComponentsState>(set => (
             set(state => ({
                 promises: [...state.promises, {
                     componentId: id,
-                    resolve: resolve as (value: unknown) => void,
-                    reject: reject as (value: unknown) => void
+                    resolve: resolve as (value: Payload) => void,
+                    reject: reject as (value: Payload) => void
                 }],
                 components: [...state.components, overlayComponent]
             }));
@@ -71,7 +74,7 @@ export const useOverlayComponentsStore = create<OverlayComponentsState>(set => (
         });
     },
 
-    closeComponentById: (id: string, payload?: unknown) => {
+    closeComponentById: (id: string, payload?: Payload) => {
         set(state => {
             const promise = state.promises.find(i => i.componentId === id);
             promise?.resolve(payload);
@@ -80,5 +83,15 @@ export const useOverlayComponentsStore = create<OverlayComponentsState>(set => (
                 promises: state.promises.filter(i => i.componentId !== id)
             }
         });
+    },
+
+    closeLastComponent: (payload?: Payload) => {
+        const { components, closeComponentById } = get();
+
+        if (!components.length) return;
+
+        const lastComponent = components[components.length - 1];
+
+        closeComponentById(lastComponent.id, payload);
     }
 }));
