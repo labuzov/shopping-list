@@ -25,6 +25,7 @@
     background-color: var(--color-shop-item-bg);
     transition: .2s;
     cursor: pointer;
+    touch-action: none;
 
     .left {
         margin-left: -50px;

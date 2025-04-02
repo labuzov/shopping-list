@@ -12,7 +12,6 @@ import { OverlayComponentBase } from '@/components/OverlayComponentsContainer/Ov
 import { Drawer } from '@/components/Drawers/Drawer';
 
 import { MenuPanelButton } from './MenuPanelButton/MenuPanelButton';
-import { MenuPanelProfile } from './Profile/MenuPanelProfile';
 import styles from './MenuPanelDrawer.module.scss';
 
 
@@ -90,12 +89,14 @@ export const MenuPanelDrawer: React.FC<MenuPanelDrawerProps> = ({
                             onClick={handleSettingsButtonClick}
                         />
                         
+                        {/*
                         <MenuPanelProfile
                             user={user}
                             onClick={onClose}
                             onLoginClick={onLoginClick}
                             onLogoutClick={onLogoutClick}
                         />
+                        */}
                     </div>
                 </div>
                 <div className={styles.bg} onClick={onClose} />

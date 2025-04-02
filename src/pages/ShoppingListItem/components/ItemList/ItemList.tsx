@@ -1,7 +1,7 @@
 import { createRef, useMemo, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { MdOutlineMoodBad } from 'react-icons/md';
-import { Active, DndContext, DragEndEvent, DragOverlay, DragStartEvent, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { Active, DndContext, DragEndEvent, DragOverlay, DragStartEvent, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 
 import { ShoppingItem } from '@/models/shoppingListModels';
@@ -34,7 +34,8 @@ export const ItemList: React.FC<ItemListProps> = ({
     const showComponent = useOverlayComponentsStore(state => state.showComponent);
 
     const sensors = useSensors(
-        useSensor(PointerSensor)
+        useSensor(PointerSensor),
+        useSensor(TouchSensor)
     );
 
     const handleClick = async (id: string, isDone: boolean) => {
