@@ -29,7 +29,7 @@ const ShoppingListItemPage = () => {
 
     const { data: itemsData, dataStatus: itemsDataStatus } = useFirestoreData<ShoppingItem>(`lists/${listId}/items`, { ordering: itemsOrdering });
 
-    const listsFilters: FirestoreDataFilter[] = useMemo(() => [{ field: documentId(), value: id }], [id]);
+    const listsFilters: FirestoreDataFilter[] = useMemo(() => [{ field: documentId(), value: listId }], [listId]);
     const { data: listsData, dataStatus: listsDataStatus, setData } = useFirestoreData<ShoppingList>(`lists`, { filters: listsFilters });
 
     const showComponent = useOverlayComponentsStore(state => state.showComponent);
