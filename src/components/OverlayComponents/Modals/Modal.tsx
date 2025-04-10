@@ -1,27 +1,17 @@
-import { CSSProperties, ReactNode, useRef } from 'react';
+import { ReactNode, useRef } from 'react';
 import classNames from 'classnames';
 import { MdClose } from 'react-icons/md';
+import { CSSTransition } from 'react-transition-group';
 
 import { Loading } from '@/components/Loading/Loading';
-import { Button, ButtonType } from '@/components/Button/Button';
+import { Button } from '@/components/Button/Button';
 import styles from './Modal.module.scss';
-import { CSSTransition } from 'react-transition-group';
-import { OverlayComponentBase } from '../OverlayComponentsContainer/OverlayComponentsContainer';
+import { OverlayComponentBase } from '../types';
+import { ModalButton } from './types';
 
 
 const DEFAULT_WIDTH = 500;
 const ANIM_DURATION = 200;
-
-export type ModalButton = {
-    text: string;
-    title?: string;
-    type?: ButtonType;
-    isDisabled?: boolean;
-    isLoading?: boolean;
-    alignLeft?: boolean;
-    style?: CSSProperties;
-    onClick?: () => Promise<void> | void;
-}
 
 export type ModalProps = OverlayComponentBase & {
     title?: string | ReactNode;
@@ -48,7 +38,7 @@ export const Modal: React.FC<ModalProps> = ({
             <Button
                 key={index}
                 text={button.text}
-                type={button.type}
+                variant={button.variant}
                 className={styles.button}
                 style={button.style}
                 disabled={button.isDisabled}

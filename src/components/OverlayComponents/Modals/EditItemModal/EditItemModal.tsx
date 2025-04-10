@@ -5,10 +5,10 @@ import { ShoppingItem } from '@/models/shoppingListModels';
 import { useLoading } from '@/hooks/loadingHooks';
 import ListService from '@/services/ListService';
 
-import { Modal, ModalButton, ModalProps } from '@/components/Modal/Modal';
-import { ButtonType } from '../Button/Button';
-import { Label } from '../Label/Label';
-import { Input } from '../FormControls/Input/Input';
+import { Label } from '@/components/Label/Label';
+import { Input } from '@/components/FormControls/Input/Input';
+import { Modal, ModalProps } from '../Modal';
+import { ModalButton } from '../types';
 
 
 export type EditItemModalProps = ModalProps & {
@@ -42,7 +42,7 @@ export const EditItemModal: React.FC<EditItemModalProps> = ({
     const getButtons = () => {
         const buttons: ModalButton[] = [];
 
-        buttons.push({ text: 'Отмена', type: ButtonType.OutlineSecondary, onClick: handleCancel });
+        buttons.push({ text: 'Отмена', variant: 'outlineSecondary', onClick: handleCancel });
         buttons.push({ text: 'Изменить', isLoading, isDisabled: isLoading, onClick: handleSubmit });
 
         return buttons;

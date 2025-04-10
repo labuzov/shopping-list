@@ -1,7 +1,5 @@
-import { useNavigate } from 'react-router-dom';
-import { MdLogin } from 'react-icons/md';
+import { MdLogin, MdLogout } from 'react-icons/md';
 
-import { ROUTES } from '@/constants/routes';
 import { User } from '@/stores/AuthStore';
 
 import { Avatar } from '@/components/Avatar/Avatar';
@@ -11,47 +9,39 @@ import styles from './MenuPanelProfile.module.scss';
 
 type Props = {
     user: User | null;
-    onClick?: () => void;
     onLoginClick: () => void;
     onLogoutClick: () => void;
+    onProfileClick?: () => void;
 };
 
 export const MenuPanelProfile: React.FC<Props> = ({
-    user, onClick, onLoginClick, onLogoutClick
+    user, onLoginClick, onLogoutClick, onProfileClick
 }) => {
-    const navigate = useNavigate();
     const isAuth = !!user;
-
-    const handleLoginClick = () => {
-        onLoginClick();
-
-        navigate(ROUTES.login.get());
-        onClick?.();
-    }
-
-    const handleProfileClick = () => {
-        onLogoutClick();
-
-        navigate(ROUTES.profile.get());
-        onClick?.();
-    }
 
     return ( 
         <div className={styles.account}>
             {isAuth ? (
-                <div onClick={handleProfileClick} className={styles.accountInfo}>
-                    <div className={styles.accountInfoAvatar}>
-                        <Avatar src={user.photoURL} />
+                <div onClick={onProfileClick} className={styles.accountInfo}>
+                    <div className={styles.accountInfoLeft}>
+                        <div className={styles.accountInfoAvatar}>
+                            <Avatar src={user.photoURL} />
+                        </div>
+                        <div className={styles.accountInfoText}>
+                            <div className={styles.accountInfoTextPrimary}>{user.displayName}</div>
+                            <div className={styles.accountInfoTextSecondary}>{user.email || user.phoneNumber}</div>
+                        </div>
                     </div>
-                    <div className={styles.accountInfoText}>
-                        <div className={styles.accountInfoTextPrimary}>{user.displayName}</div>
-                        <div className={styles.accountInfoTextSecondary}>{user.email || user.phoneNumber}</div>
+                    <div className={styles.accountInfoRight}>
+                        <div className={styles.logoutIcon} onClick={onLogoutClick}>
+                            <MdLogout />
+                        </div>
                     </div>
                 </div>
             ) : (
                 <div 
                     className={styles.accountLogin}
-                    onClick={handleLoginClick}
+                    onClick={onLoginClick}
                 >
                     <div className={styles.accountLoginIcon}>
                         <MdLogin />

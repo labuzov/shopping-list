@@ -2,16 +2,16 @@ import { useState } from 'react';
 import { MdArrowBack } from 'react-icons/md';
 
 import { ShoppingItem } from '@/models/shoppingListModels';
-
-import { Drawer } from '../Drawer';
-import { OverlayComponentBase } from '../../OverlayComponentsContainer/OverlayComponentsContainer';
-import styles from './AddListItemsDrawer.module.scss';
-import { Textarea } from '../../FormControls/Textarea/Textarea';
-import { Button } from '../../Button/Button';
-import { IconButton } from '../../IconButton/IconButton';
-import { Label } from '../../Label/Label';
 import { useLoading } from '@/hooks/loadingHooks';
 import ListService from '@/services/ListService';
+
+import { Drawer } from '../Drawer';
+import styles from './AddListItemsDrawer.module.scss';
+import { Textarea } from '../../../FormControls/Textarea/Textarea';
+import { Button } from '../../../Button/Button';
+import { IconButton } from '../../../IconButton/IconButton';
+import { Label } from '../../../Label/Label';
+import { OverlayComponentBase } from '../../types';
 
 
 type AddListItemsDrawerProps = OverlayComponentBase & {

@@ -1,5 +1,6 @@
 import { MdShoppingCart } from 'react-icons/md';
 import { IoMdListBox } from 'react-icons/io';
+import { IoShirtSharp } from 'react-icons/io5';
 
 import { ShoppingListIcon } from '@/models/shoppingListModels';
 
@@ -16,6 +17,7 @@ export const getShoppingListIcon = (icon?: ShoppingListIcon) => {
         case ShoppingListIcon.Ozon: return OzonIcon;
         case ShoppingListIcon.Fix: return FixIcon;
         case ShoppingListIcon.Korona: return KoronaIcon;
+        case ShoppingListIcon.Shirt: return IoShirtSharp;
         default: return IoMdListBox;
     }
 }

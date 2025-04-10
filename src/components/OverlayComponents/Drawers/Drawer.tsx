@@ -2,7 +2,7 @@ import { CSSProperties, PropsWithChildren, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import classNames from 'classnames';
 
-import { OverlayComponentBase } from '../OverlayComponentsContainer/OverlayComponentsContainer';
+import { OverlayComponentBase } from '../types';
 import styles from './Drawer.module.scss';
 
 

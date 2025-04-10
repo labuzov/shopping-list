@@ -1,8 +1,8 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { MdMenu } from 'react-icons/md';
 import { useShallow } from 'zustand/shallow';
 
-import { FirestoreDataOrdering, FirestoreDataStatus, useFirestoreData } from '@/hooks/firestoreHooks';
+import { FirestoreDataOrdering, useFirestoreData } from '@/hooks/firestoreHooks';
 import { ShoppingList } from '@/models/shoppingListModels';
 import { useOverlayComponentsStore } from '@/stores/OverlayComponentsStore';
 import { useHeaderStore } from '@/stores/HeaderStore';
@@ -12,6 +12,7 @@ import { IconButton } from '../IconButton/IconButton';
 import { MenuPanelDrawer } from './MenuPanelDrawer/MenuPanelDrawer';
 import { Container } from '../Container/Container';
 import styles from './Header.module.scss';
+import { getVisibleLists } from './utils';
 
 
 const ordering: FirestoreDataOrdering = { field: 'createdAt', directionStr: 'asc' };
@@ -29,11 +30,9 @@ export const Header: FC = () => {
     })));
     const showComponent = useOverlayComponentsStore(state => state.showComponent);
 
-    const { data: lists, dataStatus } = useFirestoreData<ShoppingList>(`lists`, { ordering });
+    const { data } = useFirestoreData<ShoppingList>(`lists`, { ordering });
 
     const handleMenuButtonClick = () => {
-        if (dataStatus !== FirestoreDataStatus.Loaded) return;
-
         showComponent(MenuPanelDrawer, {
             lists,
             user,
@@ -41,6 +40,8 @@ export const Header: FC = () => {
             onLogoutClick: logout
         });
     }
+
+    const lists = useMemo(() => getVisibleLists(data, user?.uid), [data, user?.uid]);
 
     return (
         <>

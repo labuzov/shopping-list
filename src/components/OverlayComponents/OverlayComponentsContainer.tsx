@@ -8,17 +8,11 @@ import { KeyCodes } from '@/constants/keyboard';
 import {
     addScrollbarPadding,
     getScrollbarWidth,
-    getZIndex,
     isScrollbarVisible,
     removeScrollbarPadding
-} from './helpers';
+} from './utils';
+import { OverlayComponentBase } from './types';
 
-
-export type OverlayComponentBase = {
-    open?: boolean;
-    onClose?: (payload?: unknown) => void;
-    onKeyDown?: (event: KeyboardEvent) => void;
-}
 
 export const OverlayComponentsContainer: React.FC = () => {
     const {
@@ -58,6 +52,8 @@ export const OverlayComponentsContainer: React.FC = () => {
             removeScrollbarPadding();
         }
     }, [visibleIds]);
+
+    const getZIndex = (index: number) => 100 + index * 10;
 
     const handleKeyDown = (event: KeyboardEvent) => {
         if (!components?.length) return;

@@ -5,6 +5,7 @@ export enum ShoppingListIcon {
     Ozon = 'ozon',
     Fix = 'fix',
     Korona = 'korona',
+    Shirt = 'shirt'
 }
 
 export type ShoppingList = {
@@ -12,7 +13,10 @@ export type ShoppingList = {
     icon?: ShoppingListIcon;
     order?: string[];
     createdAt?: number;
+    createdBy?: string;
     updatedAt?: number;
+    sharedWith?: string[];
+    isPublic?: boolean;
 }
 
 export type ShoppingItem = {

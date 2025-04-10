@@ -1,6 +1,6 @@
 import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc, writeBatch } from 'firebase/firestore';
 
-import { firebaseFirestore } from '@/firebaseConfig';
+import { firebaseAuth, firebaseFirestore } from '@/firebaseConfig';
 import { ShoppingItem, ShoppingList } from '@/models/shoppingListModels';
 import { generateId } from '@/helpers/numberHelpers';
 
@@ -10,6 +10,7 @@ class ListService {
 
     public async createList(list: ShoppingList) {
         list.createdAt = new Date().getTime();
+        list.createdBy = firebaseAuth.currentUser?.uid ?? '';
         await addDoc(this._getListCollectionRef(), list);
     }
 

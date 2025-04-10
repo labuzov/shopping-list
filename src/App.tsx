@@ -7,7 +7,7 @@ import { useAppConfigStore } from '@/stores/AppConfigStore';
 import { useAuthStore } from '@/stores/AuthStore';
 import { ROUTES } from '@/constants/routes';
 
-import { OverlayComponentsContainer } from '@/components/OverlayComponentsContainer/OverlayComponentsContainer';
+import { OverlayComponentsContainer } from '@/components/OverlayComponents/OverlayComponentsContainer';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { Loading } from '@/components/Loading/Loading';
 import Layout from '@/components/Layout/Layout';

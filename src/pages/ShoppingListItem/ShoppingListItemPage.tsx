@@ -11,7 +11,7 @@ import ListService from '@/services/ListService';
 
 import { Container } from '@/components/Container/Container';
 import { AddItemsButton } from '@/components/AddItemsButton/AddItemsButton';
-import { ConfirmationModal } from '@/components/Modal/ConfirmationModal';
+import { ConfirmationModal } from '@/components/OverlayComponents/Modals/ConfirmationModal';
 import { IconButton } from '@/components/IconButton/IconButton';
 import { ItemList } from './components/ItemList/ItemList';
 

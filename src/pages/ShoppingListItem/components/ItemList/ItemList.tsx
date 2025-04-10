@@ -9,7 +9,7 @@ import { useOverlayComponentsStore } from '@/stores/OverlayComponentsStore';
 import { FirestoreData } from '@/hooks/firestoreHooks';
 import ListService from '@/services/ListService';
 
-import { EditItemModal } from '@/components/Modal/EditItemModal';
+import { EditItemModal } from '@/components/OverlayComponents/Modals/EditItemModal/EditItemModal';
 import { Loading } from '@/components/Loading/Loading';
 import { Summary } from '../Summary/Summary';
 import { Item } from './Item';

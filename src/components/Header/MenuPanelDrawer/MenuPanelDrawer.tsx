@@ -8,11 +8,15 @@ import { getShoppingListIcon } from '@/helpers/shoppingListIconHelpers';
 import { ROUTES } from '@/constants/routes';
 import { User } from '@/stores/AuthStore';
 
-import { OverlayComponentBase } from '@/components/OverlayComponentsContainer/OverlayComponentsContainer';
-import { Drawer } from '@/components/Drawers/Drawer';
+import { Drawer } from '@/components/OverlayComponents/Drawers';
+import { OverlayComponentBase } from '@/components/OverlayComponents';
 
 import { MenuPanelButton } from './MenuPanelButton/MenuPanelButton';
 import styles from './MenuPanelDrawer.module.scss';
+import { MenuPanelProfile } from './Profile/MenuPanelProfile';
+import { Button } from '@/components/Button';
+import { useOverlayComponentsStore } from '@/stores/OverlayComponentsStore';
+import { CreateShoppingListDrawer } from '@/components/OverlayComponents/Drawers/ShoppingListDrawer/CreateShoppingListDrawer';
 
 
 type MenuPanelDrawerProps = OverlayComponentBase & {
@@ -25,7 +29,11 @@ type MenuPanelDrawerProps = OverlayComponentBase & {
 export const MenuPanelDrawer: React.FC<MenuPanelDrawerProps> = ({
     user, lists, onLoginClick, onLogoutClick, onClose, ...props 
 }) => {
+    const showComponent = useOverlayComponentsStore(state => state.showComponent);
+
     const navigate = useNavigate();
+
+    const canCreateList = !!user;
 
     const handleNavigateAndClose = (path: string) => {
         navigate(path);
@@ -36,8 +44,25 @@ export const MenuPanelDrawer: React.FC<MenuPanelDrawerProps> = ({
         handleNavigateAndClose('/');
     }
 
+    const handleCreateListClick = () => {
+        onClose?.();
+        showComponent(CreateShoppingListDrawer);
+    }
+
     const handleSettingsButtonClick = () => {
         handleNavigateAndClose(ROUTES.settings.get());
+    }
+
+    const handleLoginClick = () => {
+        onLoginClick();
+
+        onClose?.();
+    }
+
+    const handleLogoutClick = () => {
+        onLogoutClick();
+
+        onClose?.();
     }
 
     const listButtons = useMemo(() => {
@@ -81,6 +106,15 @@ export const MenuPanelDrawer: React.FC<MenuPanelDrawerProps> = ({
                         />
 
                         {listButtons}
+
+                        {canCreateList && (
+                            <Button
+                                className={styles.addListButton}
+                                text="+ Создать список"
+                                variant="text"
+                                onClick={handleCreateListClick}
+                            />
+                        )}
                     </div>
                     <div className={styles.bottom}>
                         <MenuPanelButton
@@ -89,14 +123,11 @@ export const MenuPanelDrawer: React.FC<MenuPanelDrawerProps> = ({
                             onClick={handleSettingsButtonClick}
                         />
                         
-                        {/*
                         <MenuPanelProfile
                             user={user}
-                            onClick={onClose}
-                            onLoginClick={onLoginClick}
-                            onLogoutClick={onLogoutClick}
+                            onLoginClick={handleLoginClick}
+                            onLogoutClick={handleLogoutClick}
                         />
-                        */}
                     </div>
                 </div>
                 <div className={styles.bg} onClick={onClose} />

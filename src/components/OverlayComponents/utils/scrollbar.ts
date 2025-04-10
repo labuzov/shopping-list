@@ -27,5 +27,3 @@ export const removeScrollbarPadding = () => {
     document.body.style.overflow = '';
     document.body.style.paddingRight = '';
 }
-
-export const getZIndex = (index: number) => 100 + index * 10;

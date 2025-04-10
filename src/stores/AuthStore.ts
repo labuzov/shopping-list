@@ -27,10 +27,8 @@ export const useAuthStore = create<AuthState>(set => ({
             prompt: "select_account "
         });
 
-        const signInWithGooglePopup = () => signInWithPopup(firebaseAuth, provider);
+        const { user } = await signInWithPopup(firebaseAuth, provider);
 
-        const { user } = await signInWithGooglePopup();
-        
         if (user) {
             set({ user });
         }

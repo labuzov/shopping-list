@@ -5,21 +5,15 @@ import { CSSProperties } from 'react';
 
 import styles from './Button.module.scss';
 import { Loading } from '../Loading/Loading';
+import { ButtonVariant } from './types';
 
-
-// eslint-disable-next-line react-refresh/only-export-components
-export enum ButtonType {
-    Default,
-    Outline,
-    OutlineSecondary,
-}
 
 type ButtonProps = {
     text?: string;
     hint?: string;
     className?: string;
     disabled?: boolean;
-    type?: ButtonType;
+    variant?: ButtonVariant;
     isLoading?: boolean;
     style?: CSSProperties;
     Icon?: IconType;
@@ -27,13 +21,14 @@ type ButtonProps = {
 };
 
 export const Button: React.FC<ButtonProps> = ({
-    hint, text, className, disabled, type, isLoading, style, Icon, onClick
+    hint, text, className, disabled, variant, isLoading, style, Icon, onClick
 }) => {
 
     const classes = classNames(
         styles.button,
-        type === ButtonType.Outline && styles.outline,
-        type === ButtonType.OutlineSecondary && styles.outlineSecondary,
+        variant === 'outline' && styles.variantOutline,
+        variant === 'outlineSecondary' && styles.variantOutlineSecondary,
+        variant === 'text' && styles.variantText,
         isLoading && styles.loading,
         className
     );

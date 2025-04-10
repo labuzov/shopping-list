@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
-import { Modal, ModalButton, ModalProps } from '@/components/Modal/Modal';
-import { ButtonType } from '../Button/Button';
+import { ModalProps, ModalButton, Modal } from '../../Modals';
 
 
 export type ConfirmationModalProps = ModalProps & {
@@ -28,7 +27,7 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
         const cancelText = cancelButtonText || 'Отмена';
         const confirmText = confirmButtonText || 'ОК';
 
-        buttons.push({ text: cancelText, type: ButtonType.OutlineSecondary, onClick: handleCancel });
+        buttons.push({ text: cancelText, variant: 'outlineSecondary', onClick: handleCancel });
         buttons.push({ text: confirmText, onClick: handleConfirm });
 
         return buttons;

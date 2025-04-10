@@ -19,7 +19,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #fff;
+    background-color: transparent;
     border: 1px solid #adb5bd;
     transition: .4s;
     border-radius: 30px;
@@ -49,4 +49,5 @@
 .input:checked + .slider:before {
     transform: translateX(1.5rem);
     background-color: #fff;
+    box-shadow: 0 0 2px 0 #666;
 }

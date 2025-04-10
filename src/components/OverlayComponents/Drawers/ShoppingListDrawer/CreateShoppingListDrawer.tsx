@@ -5,7 +5,6 @@ import { useLoading } from '@/hooks/loadingHooks';
 import { ShoppingList, ShoppingListIcon } from '@/models/shoppingListModels';
 import ListService from '@/services/ListService';
 
-import { OverlayComponentBase } from '@/components/OverlayComponentsContainer/OverlayComponentsContainer';
 import { Label } from '@/components/Label/Label';
 import { Input } from '@/components/FormControls/Input/Input';
 import { IconButton } from '@/components/IconButton/IconButton';
@@ -15,6 +14,8 @@ import { Row } from '@/components/Form/Row/Row';
 import { Drawer } from '../Drawer';
 import styles from './ShoppingListDrawer.module.scss';
 import { ShoppingListIconSelect } from './ShoppingListIconSelect/ShoppingListIconSelect';
+import { OverlayComponentBase } from '../../types';
+import { Switch } from '@/components/FormControls/Switch/Switch';
 
 
 type CreateShoppingListDrawerProps = OverlayComponentBase;
@@ -23,14 +24,20 @@ export const CreateShoppingListDrawer: React.FC<CreateShoppingListDrawerProps> =
     open, onClose
 }) => {
     const [title, setTitle] = useState('');
+    const [isPublic, setIsPublic] = useState(true);
     const [icon, setIcon] = useState(ShoppingListIcon.Default);
 
     const { isLoading, addToLoading } = useLoading();
 
+    const handleIsPublicSwitch = () => {
+        setIsPublic(value => !value);
+    }
+
     const handleCreate = async () => {
         const list: ShoppingList = {
             title,
-            icon
+            icon,
+            isPublic
         };
 
         await addToLoading(() => ListService.createList(list));
@@ -66,6 +73,18 @@ export const CreateShoppingListDrawer: React.FC<CreateShoppingListDrawerProps> =
                             value={icon}
                             onChange={newIcon => setIcon(newIcon)}
                         />
+                    </Row>
+
+                    <Row>
+                        <div className={styles.switchContainer}>
+                            <div className={styles.title}>Видимый для всех</div>
+                            <div className={styles.switch}>
+                                <Switch
+                                    isChecked={isPublic}
+                                    onChange={handleIsPublicSwitch}
+                                />
+                            </div>
+                        </div>
                     </Row>
                 </div>
 

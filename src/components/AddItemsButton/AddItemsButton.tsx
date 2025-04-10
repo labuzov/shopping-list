@@ -1,6 +1,6 @@
 import { useOverlayComponentsStore } from '@/stores/OverlayComponentsStore';
 
-import { AddListItemsDrawer } from '@/components/Drawers/AddListItemsDrawer/AddListItemsDrawer';
+import { AddListItemsDrawer } from '@/components/OverlayComponents/Drawers/AddListItemsDrawer/AddListItemsDrawer';
 import styles from './AddItemsButton.module.scss';
 
 
