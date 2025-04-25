@@ -1,0 +1,64 @@
+name: Firebase CI
+
+on:
+  push:
+    branches: [ '*' ]
+  pull_request:
+    branches: [ '*' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install -g npm
+      - name: npm install, build and test
+        run: |
+          npm ci
+          if [[ "${GITHUB_REF##*/}" == "main" ]]; then
+            npm run build-prod
+          else
+            npm run build
+          fi
+      - name: Archive Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: build
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/development'  # Условие для запуска деплоя только на main и dev
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download Build
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+      - name: Set Firebase Project
+        id: set_project
+        run: |
+          if [[ "${GITHUB_REF##*/}" == "main" ]]; then
+            echo "FIREBASE_PROJECT=shopping-list-b1c7a" >> $GITHUB_ENV
+          elif [[ "${GITHUB_REF##*/}" == "development" ]]; then
+            echo "FIREBASE_PROJECT=shopping-list-qa" >> $GITHUB_ENV
+          fi
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting --project ${{ env.FIREBASE_PROJECT }}
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
