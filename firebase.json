@@ -2,7 +2,6 @@
   "hosting": [
     {
       "target": "prod",
-      "site": "shopping-list-by",
       "public": "dist",
       "ignore": [
         "firebase.json",
