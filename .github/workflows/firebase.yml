@@ -53,12 +53,14 @@ jobs:
         run: |
           if [[ "${GITHUB_REF##*/}" == "main" ]]; then
             echo "FIREBASE_PROJECT=shopping-list-b1c7a" >> $GITHUB_ENV
+            echo "FIREBASE_TARGET=prod" >> $GITHUB_ENV
           elif [[ "${GITHUB_REF##*/}" == "development" ]]; then
             echo "FIREBASE_PROJECT=shopping-list-qa" >> $GITHUB_ENV
+            echo "FIREBASE_TARGET=dev" >> $GITHUB_ENV
           fi
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting --project ${{ env.FIREBASE_PROJECT }}
+          args: deploy --only hosting:${{ env.FIREBASE_TARGET }} --project ${{ env.FIREBASE_PROJECT }}
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

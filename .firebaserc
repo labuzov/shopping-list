@@ -2,5 +2,22 @@
   "projects": {
     "default": "shopping-list-b1c7a",
     "dev": "shopping-list-qa"
-  }
+  },
+  "targets": {
+    "shopping-list-b1c7a": {
+      "hosting": {
+        "prod": [
+          "shopping-list-by"
+        ]
+      }
+    },
+    "shopping-list-qa": {
+      "hosting": {
+        "dev": [
+          "shopping-list-qa"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
