@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "site": "shopping-list-by",
     "public": "dist",
     "ignore": [
       "firebase.json",

@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "shopping-list-b1c7a"
+    "default": "shopping-list-b1c7a",
+    "dev": "shopping-list-qa"
   }
 }
