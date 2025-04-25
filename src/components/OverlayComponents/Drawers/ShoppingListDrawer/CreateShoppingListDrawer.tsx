@@ -75,7 +75,8 @@ export const CreateShoppingListDrawer: React.FC<CreateShoppingListDrawerProps> =
                         />
                     </Row>
 
-                    <Row>
+                    <Row className={styles.additionalSettings}>
+                        <Label text="Доп. настройки" />
                         <div className={styles.switchContainer}>
                             <div className={styles.title}>Видимый для всех</div>
                             <div className={styles.switch}>

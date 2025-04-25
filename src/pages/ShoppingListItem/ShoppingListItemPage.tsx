@@ -4,7 +4,7 @@ import { MdDeleteOutline, MdOutlineEditOff, MdOutlineModeEditOutline } from 'rea
 import { documentId } from 'firebase/firestore';
 
 import { useOverlayComponentsStore } from '@/stores/OverlayComponentsStore';
-import { FirestoreDataFilter, FirestoreDataOrdering, FirestoreDataStatus, useFirestoreData } from '@/hooks/firestoreHooks';
+import { FirestoreData, FirestoreDataFilter, FirestoreDataOrdering, FirestoreDataStatus, useFirestoreData } from '@/hooks/firestoreHooks';
 import { ShoppingItem, ShoppingList } from '@/models/shoppingListModels';
 import { useHeaderOptions } from '@/hooks/headerHooks';
 import ListService from '@/services/ListService';
@@ -16,7 +16,9 @@ import { IconButton } from '@/components/IconButton/IconButton';
 import { ItemList } from './components/ItemList/ItemList';
 
 import styles from './ShoppingListItemPage.module.scss';
-import { getSortedShoppingItems } from './helpers/shoppingListItemHelpers';
+import { getList, getListItemsAmount, getSortedShoppingItems } from './helpers/shoppingListItemHelpers';
+import { ListHeader } from './components/ListHeader/ListHeader';
+import { Loading } from '@/components/Loading/Loading';
 
 
 const itemsOrdering: FirestoreDataOrdering = { field: 'createdAt', directionStr: 'asc' };
@@ -27,10 +29,10 @@ const ShoppingListItemPage = () => {
     const { id } = useParams<{ id: string }>();
     const listId = id ?? 'default';
 
-    const { data: itemsData, dataStatus: itemsDataStatus } = useFirestoreData<ShoppingItem>(`lists/${listId}/items`, { ordering: itemsOrdering });
+    const { data: itemsData, dataStatus: itemsDataStatus, setData: setItemsData } = useFirestoreData<ShoppingItem>(`lists/${listId}/items`, { ordering: itemsOrdering });
 
     const listsFilters: FirestoreDataFilter[] = useMemo(() => [{ field: documentId(), value: listId }], [listId]);
-    const { data: listsData, dataStatus: listsDataStatus, setData } = useFirestoreData<ShoppingList>(`lists`, { filters: listsFilters });
+    const { data: listsData, dataStatus: listsDataStatus, setData: setListsData } = useFirestoreData<ShoppingList>(`lists`, { filters: listsFilters });
 
     const showComponent = useOverlayComponentsStore(state => state.showComponent);
 
@@ -44,8 +46,9 @@ const ShoppingListItemPage = () => {
         setEditMode(mode => !mode);
     }
 
-    const handleOrderChange = (order: string[]) => {
-        setData(lists => lists.map(list => {
+    const handleOrderChange = (items: FirestoreData<ShoppingItem>[], order: string[]) => {
+        setItemsData(items);
+        setListsData(lists => lists.map(list => {
             list.order = order;
             return list;
         }));
@@ -65,21 +68,38 @@ const ShoppingListItemPage = () => {
 
     useHeaderOptions(headerOptions);
 
-    const shoppingItems = useMemo(() => getSortedShoppingItems(itemsData, listsData), [itemsData, listsData]);
+    const isLoading = (
+        itemsDataStatus === FirestoreDataStatus.Loading ||
+        listsDataStatus === FirestoreDataStatus.Loading
+    );
+
+    const list = useMemo(() => getList(listsData), [listsData]);
+    const shoppingItems = useMemo(() => getSortedShoppingItems(itemsData, list), [itemsData, list]);
+    const itemsAmount = getListItemsAmount(shoppingItems);
 
     return (
         <>
-            <Container maxWidth={768}>
-                <ItemList
-                    listId={listId}
-                    shoppingItems={shoppingItems}
-                    isLoading={
-                        itemsDataStatus === FirestoreDataStatus.Loading ||
-                        listsDataStatus === FirestoreDataStatus.Loading
-                    }
-                    editMode={editMode}
-                    onOrderChange={handleOrderChange}
-                />
+            <Container maxWidth={768} className={styles.container}>
+                {isLoading ? (
+                    <div className={styles.loading}>
+                        <Loading fillContainer />
+                    </div>
+                ) : (
+                    <>
+                        <ListHeader
+                            title={list?.title ?? 'Без названия'}
+                            total={itemsAmount.total}
+                            done={itemsAmount.done}
+                        />
+                        <ItemList
+                            listId={listId}
+                            shoppingItems={shoppingItems}
+                            editMode={editMode}
+                            onOrderChange={handleOrderChange}
+                        />
+                    </>
+                )}
+
                 <AddItemsButton listId={listId} />
             </Container>
         </>

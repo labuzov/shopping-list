@@ -32,9 +32,13 @@
     width: 100%;
 }
 
+.additionalSettings {
+    margin-top: 2rem;
+}
+
 .switchContainer {
+    margin-top: 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 2rem;
 }

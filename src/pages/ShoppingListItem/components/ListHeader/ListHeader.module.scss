@@ -1,0 +1,22 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem 0;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.amount {
+    margin-left: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+}

@@ -29,17 +29,33 @@ export const getListSummary = (items: ShoppingItem[]) => {
     };
 }
 
+export const getListItemsAmount = (items: ShoppingItem[]) => {
+    const total = items.length;
+    const done = items.filter(({ isDone }) => !!isDone).length;
+
+    return {
+        total,
+        done
+    }
+}
+
 const isNumber = (value: number) => {
     return !isNaN(value) && typeof value === 'number';
 }
 
-export const getSortedShoppingItems = (
-    items?: FirestoreData<ShoppingItem>[],
-    lists?: FirestoreData<ShoppingList>[]
-): FirestoreData<ShoppingItem>[] => {
-    if (!items) return [];
+export const getList = (lists: FirestoreData<ShoppingList>[]) => {
+    if (!lists?.length) return null;
 
-    const order = lists?.[0]?.order;
+    return lists[0];
+}
+
+export const getSortedShoppingItems = (
+    items: FirestoreData<ShoppingItem>[],
+    list: FirestoreData<ShoppingList> | null
+): FirestoreData<ShoppingItem>[] => {
+    if (!items || !list) return [];
+
+    const order = list.order;
     if (!order) return items;
 
     const sortedItems = [];

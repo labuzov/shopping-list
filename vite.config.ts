@@ -6,7 +6,7 @@ import { visualizer } from 'rollup-plugin-visualizer';
 
 
 export default defineConfig(({ command }) => {
-    const isProd = command === 'build';
+    const isBuild = command === 'build';
     const srcPath = path.resolve(__dirname, 'src');
 
     const alias = {
@@ -28,7 +28,7 @@ export default defineConfig(({ command }) => {
                 ]
             },
             modules: {
-                generateScopedName: isProd ? '[hash:base64:6]' : '[name]_[local]_[hash:base64:2]'
+                generateScopedName: isBuild ? '[hash:base64:6]' : '[name]_[local]_[hash:base64:2]'
             },
         },
         resolve: {

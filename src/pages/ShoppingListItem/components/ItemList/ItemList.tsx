@@ -10,7 +10,6 @@ import { FirestoreData } from '@/hooks/firestoreHooks';
 import ListService from '@/services/ListService';
 
 import { EditItemModal } from '@/components/OverlayComponents/Modals/EditItemModal/EditItemModal';
-import { Loading } from '@/components/Loading/Loading';
 import { Summary } from '../Summary/Summary';
 import { Item } from './Item';
 
@@ -21,13 +20,12 @@ import styles from './ItemList.module.scss';
 type ItemListProps = {
     listId: string;
     shoppingItems: FirestoreData<ShoppingItem>[];
-    isLoading?: boolean;
     editMode?: boolean;
-    onOrderChange: (order: string[]) => void;
+    onOrderChange: (items: FirestoreData<ShoppingItem>[], order: string[]) => void;
 }
 
 export const ItemList: React.FC<ItemListProps> = ({
-    listId, shoppingItems, isLoading, editMode, onOrderChange
+    listId, shoppingItems, editMode, onOrderChange
 }) => {
     const [activeDraggable, setActiveDraggable] = useState<Active | null>(null);
 
@@ -64,9 +62,9 @@ export const ItemList: React.FC<ItemListProps> = ({
             const newItems = arrayMove(shoppingItems, activeIndex, overIndex);
             const newOrder = newItems.map(({ id }) => id);
 
-            ListService.updateList(listId, { order: newOrder });
+            onOrderChange(newItems, newOrder);
 
-            onOrderChange(newOrder);
+            ListService.updateList(listId, { order: newOrder });
         }
 
         setActiveDraggable(null);
@@ -139,12 +137,6 @@ export const ItemList: React.FC<ItemListProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [shoppingItems, editMode]);
 
-    if (isLoading) return (
-        <div className={styles.loading}>
-            <Loading fillContainer />
-        </div>
-    )
-
     return (
         <div className={styles.wrapper}>
             {!items.length ? (
@@ -159,7 +151,7 @@ export const ItemList: React.FC<ItemListProps> = ({
                         onDragEnd={handleDragEnd}
                         onDragCancel={handleDragCancel}
                     >
-                        <SortableContext items={shoppingItems} id="order">
+                        <SortableContext items={shoppingItems}>
                             <div className={styles.list}>
                                 <TransitionGroup>
                                     {items}
