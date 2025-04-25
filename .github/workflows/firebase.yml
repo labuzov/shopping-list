@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install -g npm
-      - name: npm install, build and test
+      - name: npm install and build
         run: |
           npm ci
           if [[ "${GITHUB_REF##*/}" == "main" ]]; then
@@ -32,22 +32,22 @@ jobs:
       - name: Archive Build
         uses: actions/upload-artifact@v4
         with:
-          name: build
-          path: build
+          name: dist
+          path: dist
 
   deploy:
     name: Deploy
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/development'  # Условие для запуска деплоя только на main и dev
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/development'
 
     steps:
       - uses: actions/checkout@v2
       - name: Download Build
         uses: actions/download-artifact@v4
         with:
-          name: build
-          path: build
+          name: dist
+          path: dist
       - name: Set Firebase Project
         id: set_project
         run: |
